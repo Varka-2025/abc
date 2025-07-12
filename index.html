@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome (includes brand icons for WhatsApp) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -513,15 +513,32 @@
             font-weight: 700;
         }
 
-        /* Dashboard Section */
-        .collections-header {
-            padding-top: 120px;
-            padding-bottom: 4rem;
-            background: linear-gradient(135deg, var(--light-color) 0%, #ffffff 100%);
-            text-align: center;
-            position: relative;
+        /* Wishlist Button Styles */
+        .btn-wishlist {
+            background: linear-gradient(45deg, var(--wishlist-color), #c2185b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+            font-weight: 700;
         }
 
+        .btn-wishlist:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.5);
+            color: white;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        /* Section Titles */
         .section-title {
             font-size: 3.5rem;
             font-weight: 800;
@@ -554,7 +571,790 @@
             font-weight: 400;
         }
 
-        /* Dashboard Simple Cart Section */
+        /* Collections Page */
+        .collections-header {
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            background: linear-gradient(135deg, var(--light-color) 0%, #ffffff 100%);
+            text-align: center;
+            position: relative;
+        }
+
+        .collections-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            padding: 1.2rem 2.5rem;
+            border-radius: 15px;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 1.2rem;
+            background: rgba(201, 146, 56, 0.1);
+            border: 3px solid var(--primary-color);
+        }
+
+        .collections-back-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(-5px);
+            box-shadow: 0 4px 15px rgba(201, 146, 56, 0.3);
+        }
+
+        /* Collections Filter */
+        .collections-filter {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 3rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e9ecef;
+            background: white;
+            color: var(--text-color);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .sort-select {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            background: white;
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Product Cards */
+        .product-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            background: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img-container {
+            position: relative;
+            overflow: hidden;
+            padding-top: 120%;
+            background: #f8f9fa;
+        }
+
+        .card-img-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .product-card:hover .card-img-top {
+            transform: scale(1.15);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Wishlist Heart Button */
+        .wishlist-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #ccc;
+            transition: var(--transition);
+            z-index: 3;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .wishlist-btn:hover {
+            background: white;
+            transform: scale(1.15);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .wishlist-btn.active {
+            color: var(--wishlist-color);
+            background: white;
+        }
+
+        .wishlist-btn.active i {
+            animation: heartBeat 0.6s ease-in-out;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1.1); }
+            75% { transform: scale(1.25); }
+        }
+
+        .card-body {
+            padding: 2.5rem 2rem;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-brown) !important;
+            letter-spacing: -0.02em;
+        }
+
+        .card-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #1a1a1a !important;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .quantity-label {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 0.3rem;
+        }
+
+        .quantity-input-group {
+            display: flex;
+            align-items: center;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .quantity-btn {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .quantity-btn:hover {
+            background: var(--dark-brown);
+        }
+
+        .quantity-input {
+            width: 80px;
+            height: 45px;
+            text-align: center;
+            border: none;
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .quantity-input:focus {
+            outline: none;
+        }
+
+        /* Card Actions */
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+            flex-direction: column;
+        }
+
+        .card-actions .btn {
+            flex: 1;
+            padding: 1rem 1.2rem;
+            font-size: 1rem;
+            border-radius: 12px;
+        }
+
+        /* Pagination */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4rem;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pagination-btn {
+            padding: 1.2rem 2.5rem;
+            border: 3px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 1.1rem;
+            min-width: 150px;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(201, 146, 56, 0.4);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .page-info {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            padding: 0 1rem;
+            background: white;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Enhanced Product Detail Page */
+        .product-detail-container {
+            padding-top: 120px;
+            padding-bottom: 3rem;
+            min-height: auto;
+        }
+
+        .enhanced-product-card {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .enhanced-gallery {
+            padding: 3rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            text-align: center;
+        }
+
+        .enhanced-main-image {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            cursor: zoom-in;
+        }
+
+        .enhanced-main-image:hover {
+            transform: scale(1.05);
+        }
+
+        .enhanced-thumbnails {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .enhanced-thumbnail {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 15px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: var(--transition);
+            border: 3px solid transparent;
+        }
+
+        .enhanced-thumbnail:hover,
+        .enhanced-thumbnail.active {
+            opacity: 1;
+            border-color: var(--primary-color);
+            transform: scale(1.15);
+            box-shadow: 0 8px 25px rgba(201, 146, 56, 0.4);
+        }
+
+        .enhanced-product-info {
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Wishlist Button in Product Detail */
+        .product-detail-wishlist {
+            position: absolute;
+            top: 4rem;
+            right: 4rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #ccc;
+            transition: var(--transition);
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-detail-wishlist:hover {
+            border-color: var(--wishlist-color);
+            transform: scale(1.15);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-detail-wishlist.active {
+            color: var(--wishlist-color);
+            border-color: var(--wishlist-color);
+            background: rgba(233, 30, 99, 0.05);
+        }
+
+        .enhanced-product-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .enhanced-product-price {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .enhanced-price-note {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .enhanced-product-description {
+            font-size: 1.3rem;
+            color: #1a1a1a !important;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .enhanced-selectors {
+            display: flex;
+            gap: 4rem;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .enhanced-fit-group,
+        .enhanced-size-group {
+            text-align: center;
+        }
+
+        .enhanced-fit-group h6,
+        .enhanced-size-group h6 {
+            margin-bottom: 1.5rem;
+            color: var(--dark-brown);
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .enhanced-fit-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .enhanced-fit-btn {
+            padding: 1.2rem 2.5rem;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-width: 140px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            color: var(--text-color) !important;
+        }
+
+        .enhanced-fit-btn:hover {
+            border-color: var(--primary-color);
+            background: rgba(201, 146, 56, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .enhanced-fit-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(201, 146, 56, 0.3);
+            font-weight: 700;
+        }
+
+        .enhanced-size-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .enhanced-size-btn {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            color: var(--text-color) !important;
+        }
+
+        .enhanced-size-btn:hover {
+            border-color: var(--primary-color);
+            background: rgba(201, 146, 56, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .enhanced-size-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white !important;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(201, 146, 56, 0.3);
+        }
+
+        /* Enhanced quantity selector for product detail */
+        .enhanced-quantity-group {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .enhanced-quantity-group h6 {
+            margin-bottom: 1rem;
+            color: var(--dark-brown);
+            font-weight: 700;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .enhanced-quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 1rem;
+        }
+
+        .enhanced-quantity-input-group {
+            display: flex;
+            align-items: center;
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .enhanced-quantity-btn {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .enhanced-quantity-btn:hover {
+            background: var(--dark-brown);
+        }
+
+        .enhanced-quantity-input {
+            width: 120px;
+            height: 60px;
+            text-align: center;
+            border: none;
+            font-weight: 700;
+            color: var(--text-color);
+            font-size: 1.3rem;
+        }
+
+        .enhanced-quantity-input:focus {
+            outline: none;
+        }
+
+        .enhanced-add-cart {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto 2rem;
+        }
+
+        .enhanced-add-cart .btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border-radius: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 25px rgba(201, 146, 56, 0.3);
+        }
+
+        .enhanced-add-cart .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(201, 146, 56, 0.4);
+        }
+
+        /* Size Chart Button */
+        .size-chart-btn {
+            background: transparent;
+            border: 3px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .size-chart-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .size-chart-table {
+            width: 100%;
+            margin-bottom: 0;
+        }
+
+        .size-chart-table th {
+            background: var(--light-color);
+            color: var(--dark-brown);
+            font-weight: 700;
+            text-align: center;
+            padding: 1.2rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .size-chart-table td {
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #dee2e6;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .size-chart-table tbody tr:hover {
+            background: rgba(201, 146, 56, 0.05);
+        }
+
+        .size-guide-note {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .size-guide-note h6 {
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+        }
+
+        .size-guide-note ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .size-guide-note li {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        /* Enhanced Features */
+        .enhanced-features {
+            margin-top: 3rem;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .enhanced-features h6 {
+            color: var(--dark-brown);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+
+        .enhanced-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .enhanced-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .enhanced-features li:hover {
+            background: rgba(201, 146, 56, 0.1);
+            transform: translateX(5px);
+        }
+
+        .enhanced-features li i {
+            color: var(--success-color);
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .enhanced-features li span {
+            color: var(--dark-brown);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* Cart Section */
         .cart-section {
             background-color: white;
             border-radius: 25px;
@@ -562,30 +1362,377 @@
             padding: 4rem;
         }
 
-        .empty-cart-state {
+        .cart-table {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .cart-table th {
+            padding: 1.5rem;
+            text-align: left;
+            border-bottom: 2px solid #eee;
+            font-weight: 700;
+            color: var(--dark-brown) !important;
+            background-color: #f8f9fa;
+            font-size: 1.2rem;
+        }
+
+        .cart-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+            font-weight: 500;
+            color: var(--text-color) !important;
+        }
+
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            color: var(--dark-brown) !important;
+            font-size: 1.2rem;
+        }
+
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+            font-size: 1.3rem;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quantity-control .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 700;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .quantity-control .quantity-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .quantity-control .quantity-input {
+            width: 70px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .cart-totals {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .cart-total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 500;
+            color: var(--text-color) !important;
+            font-size: 1.1rem;
+        }
+
+        .cart-total-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--dark-brown) !important;
+        }
+
+        .remove-item {
+            cursor: pointer;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            padding: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            color: #c0392b;
+            transform: scale(1.2);
+        }
+
+        /* Empty States */
+        .empty-cart-state,
+        .empty-wishlist-state {
             text-align: center;
             padding: 5rem 2rem;
         }
 
-        .empty-cart-icon {
+        .empty-cart-icon,
+        .empty-wishlist-icon {
             font-size: 6rem;
             color: var(--text-light);
             margin-bottom: 2rem;
             opacity: 0.6;
         }
 
-        .empty-cart-title {
+        .empty-cart-title,
+        .empty-wishlist-title {
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--dark-brown) !important;
             margin-bottom: 1.5rem;
         }
 
-        .empty-cart-text {
+        .empty-cart-text,
+        .empty-wishlist-text {
             color: #1a1a1a !important;
             margin-bottom: 2.5rem;
             font-size: 1.3rem;
             font-weight: 600;
+        }
+
+        /* Business Dashboard Styles */
+        .dashboard-stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+
+        .dashboard-stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .dashboard-stat-card:hover .stat-icon {
+            transform: scale(1.2);
+        }
+
+        .stat-info h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--dark-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-info p {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        .dashboard-section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .dashboard-section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            height: 4px;
+            width: 60px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .dashboard-actions {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .dashboard-orders {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .order-filters .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-weight: 600;
+            min-width: 200px;
+        }
+
+        .order-filters .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(201, 146, 56, 0.25);
+        }
+
+        .orders-table-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .orders-table {
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .orders-table th {
+            background: var(--dark-brown);
+            color: white;
+            padding: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+        }
+
+        .orders-table td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+            font-weight: 500;
+        }
+
+        .orders-table tbody tr:hover {
+            background: rgba(201, 146, 56, 0.05);
+        }
+
+        .order-status {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .order-status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .order-status.processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .order-status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .order-status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .order-action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+
+        .order-action-btn.view {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .order-action-btn.edit {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .order-action-btn.delete {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .order-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .empty-orders-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-orders-state .empty-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-orders-state h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+        }
+
+        .empty-orders-state p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
         /* IMPROVED CHECKOUT MODAL STYLES */
@@ -830,6 +1977,32 @@
             white-space: pre-line;
         }
 
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 25px;
+            border: none;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 25px 25px 0 0;
+            padding: 2rem;
+        }
+
+        .modal-header h5 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .btn-close {
+            background: white;
+            border-radius: 50%;
+            opacity: 1;
+        }
+
         /* NOTIFICATION IMPROVEMENTS */
         .notification {
             position: fixed;
@@ -918,6 +2091,40 @@
             margin-bottom: 2rem;
         }
 
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.35);
+            color: white;
+        }
+
         /* MOBILE RESPONSIVENESS IMPROVEMENTS */
         @media (max-width: 991.98px) {
             .navbar-nav {
@@ -942,14 +2149,77 @@
                 padding: 1rem 2rem;
             }
 
-            .checkout-modal .modal-dialog {
+            .collections-filter {
+                padding: 1.5rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .filter-btn, .sort-select {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .pagination-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .pagination-btn {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .dashboard-stat-card {
+                padding: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .dashboard-actions,
+            .dashboard-orders {
+                padding: 2rem;
+            }
+
+            .checkout-modal .modal-dialog,
+            .contact-choice-modal .modal-dialog {
                 margin: 0.5rem;
                 max-width: none;
             }
 
-            .contact-choice-modal .modal-dialog {
-                margin: 0.5rem;
-                max-width: none;
+            /* Product Detail Mobile */
+            .enhanced-selectors {
+                gap: 2rem;
+                flex-direction: column;
+            }
+
+            .enhanced-fit-options,
+            .enhanced-size-options {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .enhanced-fit-btn {
+                min-width: 120px;
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .enhanced-size-btn {
+                width: 70px;
+                height: 70px;
+                font-size: 1.3rem;
+            }
+
+            .product-detail-wishlist {
+                top: 2rem;
+                right: 2rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
             }
         }
 
@@ -981,6 +2251,16 @@
                 padding: 2rem;
             }
             
+            .collections-back-btn {
+                position: relative;
+                left: 0;
+                top: 0;
+                margin-bottom: 1.5rem;
+                font-size: 1.1rem;
+                padding: 1.2rem 2.5rem;
+                font-weight: 600;
+            }
+
             .checkout-form {
                 padding: 1.5rem;
             }
@@ -1053,11 +2333,133 @@
                 font-size: 1rem;
                 margin-bottom: 1.5rem;
             }
+
+            .orders-table {
+                font-size: 0.9rem;
+            }
+
+            .orders-table th,
+            .orders-table td {
+                padding: 1rem 0.8rem;
+            }
+
+            .dashboard-section-title {
+                font-size: 1.8rem;
+            }
+
+            .order-actions {
+                flex-direction: column;
+                gap: 0.3rem;
+            }
+
+            .order-action-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Product Detail Mobile */
+            .enhanced-product-info {
+                padding: 2.5rem;
+            }
+            
+            .enhanced-product-title {
+                font-size: 2.8rem;
+                font-weight: 700;
+            }
+            
+            .enhanced-product-price {
+                font-size: 2.2rem;
+                font-weight: 700;
+            }
+            
+            .enhanced-main-image {
+                height: 300px;
+                max-width: 380px;
+            }
+            
+            .enhanced-selectors {
+                flex-direction: column;
+                gap: 2.5rem;
+            }
+            
+            .enhanced-fit-options,
+            .enhanced-size-options {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .enhanced-fit-btn {
+                min-width: 130px;
+                padding: 1rem 2rem;
+                font-weight: 600;
+            }
+            
+            .enhanced-size-btn {
+                width: 70px;
+                height: 70px;
+                font-weight: 700;
+            }
+
+            .enhanced-quantity-input-group {
+                flex-direction: row;
+            }
+
+            .enhanced-quantity-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+
+            .enhanced-quantity-input {
+                width: 100px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .enhanced-thumbnails {
+                gap: 0.8rem;
+            }
+
+            .enhanced-thumbnail {
+                width: 70px;
+                height: 70px;
+            }
+
+            .size-chart-table {
+                font-size: 0.9rem;
+            }
+
+            .size-chart-table th,
+            .size-chart-table td {
+                padding: 0.8rem;
+                font-weight: 600;
+            }
         }
 
         @media (max-width: 576px) {
             .container {
                 padding: 0 1rem;
+            }
+
+            .cart-table,
+            .orders-table {
+                font-size: 0.9rem;
+            }
+
+            .cart-table th,
+            .cart-table td {
+                padding: 1rem 0.8rem;
+                font-weight: 500;
+            }
+
+            .cart-item-img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .quantity-control {
+                flex-direction: column;
+                gap: 0.5rem;
             }
 
             .section-title {
@@ -1092,23 +2494,82 @@
             .contact-method-description {
                 font-size: 0.85rem;
             }
-        }
 
-        /* Loading Spinner for Buttons */
-        .loading-spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+            /* Product Detail Small Mobile */
+            .enhanced-product-title {
+                font-size: 2.2rem;
+                font-weight: 700;
+            }
+
+            .enhanced-product-price {
+                font-size: 1.8rem;
+                font-weight: 700;
+            }
+
+            .enhanced-product-info {
+                padding: 2rem;
+            }
+
+            .enhanced-fit-btn {
+                min-width: 110px;
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .enhanced-size-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+
+            .enhanced-main-image {
+                height: 250px;
+                max-width: 300px;
+            }
+
+            .enhanced-thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .enhanced-quantity-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+
+            .enhanced-quantity-input {
+                width: 80px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .product-detail-wishlist {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .enhanced-gallery {
+                padding: 2rem;
+            }
+
+            .enhanced-features {
+                margin-top: 2rem;
+            }
+
+            .enhanced-features li {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
         }
 
         /* Print styles */
         @media print {
-            .navbar, .notification, .loading-overlay, .login-screen,
-            .modal-header, .modal-footer, .btn {
+            .navbar, .back-to-top, .notification, .loading-overlay, .login-screen,
+            .order-actions, .modal-header, .modal-footer, .btn {
                 display: none !important;
             }
             
@@ -1120,6 +2581,11 @@
 
             h1, h2, h3, h4, h5, h6 {
                 color: #000 !important;
+            }
+
+            .dashboard-stat-card, .dashboard-actions, .dashboard-orders {
+                break-inside: avoid;
+                page-break-inside: avoid;
             }
         }
 
@@ -1203,9 +2669,18 @@
                             <a class="nav-link active" onclick="showPage('dashboard')" href="#dashboard">DASHBOARD</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" onclick="showPage('collections')" href="#collections">COLLECTIONS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link cart-icon" onclick="showPage('cart')" href="#cart" title="View Cart">
                                 <i class="fas fa-shopping-cart"></i>
-                                <span class="cart-count">3</span>
+                                <span class="cart-count">0</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link wishlist-icon" onclick="showPage('wishlist')" href="#wishlist" title="View Wishlist">
+                                <i class="fas fa-heart"></i>
+                                <span class="wishlist-count">0</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -1218,22 +2693,159 @@
             </div>
         </nav>
 
-        <!-- Dashboard Page -->
+        <!-- Business Management Dashboard -->
         <div id="dashboard-page" class="page active">
             <div class="collections-header">
                 <div class="container">
                     <h1 class="section-title">BUSINESS DASHBOARD</h1>
-                    <p class="section-subtitle">MANAGE YOUR ORDERS AND BUSINESS OPERATIONS</p>
+                    <p class="section-subtitle">MANAGE YOUR ORDERS, CUSTOMERS, AND BUSINESS ANALYTICS</p>
                 </div>
             </div>
 
             <div class="section-padding">
                 <div class="container">
-                    <div class="cart-section" data-aos="fade-up">
-                        <h3 class="mb-4">Quick Demo - Checkout System</h3>
-                        <p class="mb-4">This is a demonstration of the improved checkout system. Click the button below to test the checkout process:</p>
-                        <button class="btn btn-success btn-lg" onclick="proceedToCheckout()">
-                            <i class="fas fa-credit-card"></i> TEST CHECKOUT SYSTEM
+                    <!-- Dashboard Stats -->
+                    <div class="row mb-5" data-aos="fade-up">
+                        <div class="col-md-3 mb-4">
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="total-orders-count">0</h3>
+                                    <p>TOTAL ORDERS</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="total-customers-count">0</h3>
+                                    <p>CUSTOMERS</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-rupee-sign"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="total-revenue">₹0</h3>
+                                    <p>TOTAL REVENUE</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-4">
+                            <div class="dashboard-stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-tshirt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3 id="total-items-sold">0</h3>
+                                    <p>ITEMS SOLD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="dashboard-actions mb-5" data-aos="fade-up" data-aos-delay="100">
+                        <h3 class="dashboard-section-title">QUICK ACTIONS</h3>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-primary btn-lg w-100" onclick="exportOrdersToCSV()">
+                                    <i class="fas fa-download"></i> EXPORT ORDERS
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-outline-primary btn-lg w-100" onclick="exportCustomersToCSV()">
+                                    <i class="fas fa-users"></i> EXPORT CUSTOMERS
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-success btn-lg w-100" onclick="clearAllData()">
+                                    <i class="fas fa-trash"></i> CLEAR DATA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Management -->
+                    <div class="dashboard-orders" data-aos="fade-up" data-aos-delay="200">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="dashboard-section-title">ORDER MANAGEMENT</h3>
+                            <div class="order-filters">
+                                <select class="form-select" onchange="filterOrders(this.value)">
+                                    <option value="all">ALL ORDERS</option>
+                                    <option value="pending">PENDING</option>
+                                    <option value="processing">PROCESSING</option>
+                                    <option value="completed">COMPLETED</option>
+                                    <option value="cancelled">CANCELLED</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="orders-table-container">
+                            <div id="orders-table">
+                                <!-- Orders will be loaded here -->
+                                <div class="empty-orders-state">
+                                    <div class="empty-icon">
+                                        <i class="fas fa-clipboard-list"></i>
+                                    </div>
+                                    <h4>NO ORDERS YET</h4>
+                                    <p>Orders will appear here as customers place them through the website.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Collections Page -->
+        <div id="collections-page" class="page">
+            <div class="collections-header">
+                <div class="container">
+                    <a href="#" class="collections-back-btn" onclick="showPage('dashboard')">
+                        <i class="fas fa-arrow-left"></i> BACK TO DASHBOARD
+                    </a>
+                    <h1 class="section-title">OUR COLLECTIONS</h1>
+                    <p class="section-subtitle">DISCOVER OUR FULL RANGE OF PREMIUM T-SHIRTS</p>
+                </div>
+            </div>
+
+            <div class="collections-grid">
+                <div class="container">
+                    <div class="collections-filter" data-aos="fade-up">
+                        <div class="filter-group">
+                            <button class="filter-btn active" onclick="filterProducts('all')">ALL PRODUCTS</button>
+                            <button class="filter-btn" onclick="filterProducts('bestseller')">BESTSELLERS</button>
+                            <button class="filter-btn" onclick="filterProducts('new')">NEW ARRIVALS</button>
+                            <button class="filter-btn" onclick="filterProducts('popular')">POPULAR</button>
+                            <select class="sort-select" onchange="sortProducts(this.value)">
+                                <option value="default">SORT BY DEFAULT</option>
+                                <option value="price-low">PRICE: LOW TO HIGH</option>
+                                <option value="price-high">PRICE: HIGH TO LOW</option>
+                                <option value="name">NAME: A TO Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="collections-grid" class="row">
+                        <!-- Products will be loaded here -->
+                    </div>
+
+                    <div class="pagination-container">
+                        <button id="prev-page" class="pagination-btn" onclick="changePage(-1)">
+                            <i class="fas fa-chevron-left"></i> PREVIOUS
+                        </button>
+                        <span id="page-info" class="page-info">PAGE 1 OF 2</span>
+                        <button id="next-page" class="pagination-btn" onclick="changePage(1)">
+                            NEXT <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
                 </div>
@@ -1244,6 +2856,9 @@
         <div id="cart-page" class="page">
             <div class="collections-header">
                 <div class="container">
+                    <a href="#" class="collections-back-btn" onclick="showPage('dashboard')">
+                        <i class="fas fa-arrow-left"></i> BACK TO DASHBOARD
+                    </a>
                     <h1 class="section-title">SHOPPING CART</h1>
                     <p class="section-subtitle">REVIEW YOUR SELECTED ITEMS AND PROCEED TO CHECKOUT</p>
                 </div>
@@ -1253,20 +2868,273 @@
                 <div class="container">
                     <div class="cart-section" data-aos="fade-up">
                         <div id="cart-content">
-                            <!-- Sample cart content for demo -->
-                            <div class="mb-4">
-                                <h4>Sample Cart Items:</h4>
-                                <div class="alert alert-info">
-                                    <strong>DEATH T-Shirt</strong> - Size: M, Fit: Regular - Quantity: 2 - ₹1,998<br>
-                                    <strong>HERMES T-Shirt</strong> - Size: L, Fit: Oversized - Quantity: 1 - ₹1,149<br>
-                                    <hr class="my-2">
-                                    <strong>Total: ₹3,147</strong>
+                            <!-- Cart items will be loaded here -->
+                            <div class="empty-cart-state">
+                                <div class="empty-cart-icon">
+                                    <i class="fas fa-shopping-cart"></i>
                                 </div>
-                                <button class="btn btn-success btn-lg" onclick="proceedToCheckout()">
-                                    <i class="fas fa-credit-card"></i> PROCEED TO CHECKOUT
+                                <h3 class="empty-cart-title">YOUR CART IS EMPTY</h3>
+                                <p class="empty-cart-text">ADD SOME AMAZING PRODUCTS TO YOUR CART FROM OUR COLLECTIONS.</p>
+                                <button class="btn btn-primary btn-lg" onclick="showPage('collections')">
+                                    <i class="fas fa-shopping-bag"></i> START SHOPPING
                                 </button>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Detail Page -->
+        <div id="product-detail-page" class="page">
+            <div class="product-detail-container">
+                <div class="container">
+                    <a href="#" class="collections-back-btn" onclick="showPage('collections')">
+                        <i class="fas fa-arrow-left"></i> BACK TO COLLECTIONS
+                    </a>
+
+                    <div class="enhanced-product-card">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="enhanced-gallery">
+                                    <img id="enhanced-main-image" src="" alt="" class="enhanced-main-image">
+                                    <div id="enhanced-thumbnails" class="enhanced-thumbnails">
+                                        <!-- Thumbnails will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="enhanced-product-info">
+                                    <button id="product-detail-wishlist-btn" class="product-detail-wishlist" onclick="toggleWishlistDetail()" title="Add to Wishlist">
+                                        <i class="fas fa-heart"></i>
+                                    </button>
+                                    
+                                    <h1 id="enhanced-product-title" class="enhanced-product-title">PRODUCT NAME</h1>
+                                    <div id="enhanced-product-price" class="enhanced-product-price">₹999</div>
+                                    <div class="enhanced-price-note">(taxes are included)</div>
+                                    <p id="enhanced-product-description" class="enhanced-product-description">PRODUCT DESCRIPTION WILL BE LOADED HERE.</p>
+
+                                    <div class="enhanced-selectors">
+                                        <div class="enhanced-fit-group">
+                                            <h6>CHOOSE FIT</h6>
+                                            <div class="enhanced-fit-options">
+                                                <div class="enhanced-fit-btn active" data-fit="regular">REGULAR FIT</div>
+                                                <div class="enhanced-fit-btn" data-fit="oversized">OVERSIZED FIT</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="enhanced-size-group">
+                                            <h6>SELECT SIZE</h6>
+                                            <div class="enhanced-size-options">
+                                                <div class="enhanced-size-btn" data-size="XS">XS</div>
+                                                <div class="enhanced-size-btn" data-size="S">S</div>
+                                                <div class="enhanced-size-btn active" data-size="M">M</div>
+                                                <div class="enhanced-size-btn" data-size="L">L</div>
+                                                <div class="enhanced-size-btn" data-size="XL">XL</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="enhanced-quantity-group">
+                                        <h6>SELECT QUANTITY</h6>
+                                        <div class="enhanced-quantity-selector">
+                                            <div class="enhanced-quantity-input-group">
+                                                <button type="button" class="enhanced-quantity-btn" onclick="updateEnhancedQuantity(-1)">-</button>
+                                                <input type="number" id="enhanced-quantity-input" class="enhanced-quantity-input" value="1" min="1" max="999" onchange="validateEnhancedQuantity()">
+                                                <button type="button" class="enhanced-quantity-btn" onclick="updateEnhancedQuantity(1)">+</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Size Chart Button -->
+                                    <div class="text-center mb-3">
+                                        <button class="size-chart-btn" data-bs-toggle="modal" data-bs-target="#sizeChartModal">
+                                            <i class="fas fa-ruler"></i> SIZE CHART
+                                        </button>
+                                    </div>
+
+                                    <div class="enhanced-add-cart">
+                                        <button id="enhanced-add-cart-btn" class="btn btn-primary btn-lg w-100" onclick="addProductToCart()">
+                                            <i class="fas fa-cart-plus"></i> ADD TO CART
+                                        </button>
+                                    </div>
+
+                                    <div class="enhanced-features">
+                                        <h6>PRODUCT FEATURES</h6>
+                                        <ul>
+                                            <li><i class="fas fa-check-circle"></i> <span>PREMIUM QUALITY COTTON</span></li>
+                                            <li><i class="fas fa-check-circle"></i> <span>PRE-SHRUNK FABRIC</span></li>
+                                            <li><i class="fas fa-check-circle"></i> <span>MACHINE WASHABLE</span></li>
+                                            <li><i class="fas fa-check-circle"></i> <span>COMFORTABLE FIT</span></li>
+                                            <li><i class="fas fa-check-circle"></i> <span>DURABLE CONSTRUCTION</span></li>
+                                            <li><i class="fas fa-check-circle"></i> <span>ECO-FRIENDLY MATERIALS</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Page -->
+        <div id="wishlist-page" class="page">
+            <div class="collections-header">
+                <div class="container">
+                    <a href="#" class="collections-back-btn" onclick="showPage('dashboard')">
+                        <i class="fas fa-arrow-left"></i> BACK TO DASHBOARD
+                    </a>
+                    <h1 class="section-title">YOUR WISHLIST</h1>
+                    <p class="section-subtitle">SAVE YOUR FAVORITE ITEMS FOR LATER</p>
+                </div>
+            </div>
+
+            <div class="section-padding">
+                <div class="container">
+                    <div class="cart-section" data-aos="fade-up">
+                        <div id="wishlist-content">
+                            <!-- Wishlist items will be loaded here -->
+                            <div class="empty-wishlist-state">
+                                <div class="empty-wishlist-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h3 class="empty-wishlist-title">YOUR WISHLIST IS EMPTY</h3>
+                                <p class="empty-wishlist-text">START BROWSING OUR COLLECTION AND ADD ITEMS TO YOUR WISHLIST.</p>
+                                <button class="btn btn-wishlist btn-lg" onclick="showPage('collections')">
+                                    <i class="fas fa-shopping-bag"></i> START SHOPPING
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Size Chart Modal -->
+        <div class="modal fade" id="sizeChartModal" tabindex="-1" aria-labelledby="sizeChartModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sizeChartModalLabel">
+                            <i class="fas fa-ruler-combined me-2"></i>SIZE CHART GUIDE
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="mb-3">REGULAR FIT MEASUREMENTS (IN INCHES)</h6>
+                                <div class="table-responsive">
+                                    <table class="table size-chart-table">
+                                        <thead>
+                                            <tr>
+                                                <th>SIZE</th>
+                                                <th>CHEST</th>
+                                                <th>LENGTH</th>
+                                                <th>SHOULDER</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>XS</strong></td>
+                                                <td>36</td>
+                                                <td>26</td>
+                                                <td>16</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>S</strong></td>
+                                                <td>38</td>
+                                                <td>27</td>
+                                                <td>17</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>M</strong></td>
+                                                <td>40</td>
+                                                <td>28</td>
+                                                <td>18</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>L</strong></td>
+                                                <td>42</td>
+                                                <td>29</td>
+                                                <td>19</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>XL</strong></td>
+                                                <td>44</td>
+                                                <td>30</td>
+                                                <td>20</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-3">OVERSIZED FIT MEASUREMENTS (IN INCHES)</h6>
+                                <div class="table-responsive">
+                                    <table class="table size-chart-table">
+                                        <thead>
+                                            <tr>
+                                                <th>SIZE</th>
+                                                <th>CHEST</th>
+                                                <th>LENGTH</th>
+                                                <th>SHOULDER</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>XS</strong></td>
+                                                <td>40</td>
+                                                <td>28</td>
+                                                <td>18</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>S</strong></td>
+                                                <td>42</td>
+                                                <td>29</td>
+                                                <td>19</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>M</strong></td>
+                                                <td>44</td>
+                                                <td>30</td>
+                                                <td>20</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>L</strong></td>
+                                                <td>46</td>
+                                                <td>31</td>
+                                                <td>21</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>XL</strong></td>
+                                                <td>48</td>
+                                                <td>32</td>
+                                                <td>22</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="size-guide-note">
+                            <h6><i class="fas fa-info-circle me-2"></i>HOW TO MEASURE</h6>
+                            <ul>
+                                <li><strong>CHEST:</strong> Measure around the fullest part of your chest, keeping the tape horizontal</li>
+                                <li><strong>LENGTH:</strong> Measure from the highest point of shoulder to the bottom hem</li>
+                                <li><strong>SHOULDER:</strong> Measure from one shoulder point to the other across the back</li>
+                                <li><strong>BODY TYPE:</strong> Choose Regular fit for a classic look, Oversized for a relaxed, trendy style</li>
+                                <li><strong>FABRIC:</strong> All measurements are for the garment, not body measurements</li>
+                                <li><strong>FIT TIP:</strong> When in doubt between two sizes, size up for comfort</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">GOT IT!</button>
                     </div>
                 </div>
             </div>
@@ -1288,19 +3156,12 @@
                             <div class="checkout-summary">
                                 <h6><i class="fas fa-receipt me-2"></i>ORDER SUMMARY</h6>
                                 <div id="checkout-items" class="checkout-items">
-                                    <div class="summary-item">
-                                        <span><strong>DEATH T-Shirt</strong> (M, Regular) × 2</span>
-                                        <span><strong>₹1,998</strong></span>
-                                    </div>
-                                    <div class="summary-item">
-                                        <span><strong>HERMES T-Shirt</strong> (L, Oversized) × 1</span>
-                                        <span><strong>₹1,149</strong></span>
-                                    </div>
+                                    <!-- Cart items will be displayed here -->
                                 </div>
                                 <div class="summary-total">
                                     <div class="summary-item">
                                         <span>SUBTOTAL:</span>
-                                        <span id="checkout-subtotal">₹3,147.00</span>
+                                        <span id="checkout-subtotal">₹0.00</span>
                                     </div>
                                     <div class="summary-item">
                                         <span>SHIPPING:</span>
@@ -1308,7 +3169,7 @@
                                     </div>
                                     <div class="summary-item">
                                         <span><strong>TOTAL:</strong></span>
-                                        <span id="checkout-total"><strong>₹3,147.00</strong></span>
+                                        <span id="checkout-total"><strong>₹0.00</strong></span>
                                     </div>
                                 </div>
                             </div>
@@ -1375,8 +3236,8 @@
                     <div class="modal-body">
                         <div class="alert alert-success mb-4">
                             <h6><i class="fas fa-info-circle me-2"></i>Your Order Details</h6>
-                            <p class="mb-2"><strong>Order ID:</strong> <span id="contact-order-id">VRK-1001</span></p>
-                            <p class="mb-2"><strong>Order Total:</strong> <span id="contact-order-total">₹3,147.00</span></p>
+                            <p class="mb-2"><strong>Order ID:</strong> <span id="contact-order-id"></span></p>
+                            <p class="mb-2"><strong>Order Total:</strong> <span id="contact-order-total"></span></p>
                             <p class="mb-0">Your order has been saved to the business system!</p>
                         </div>
                         
@@ -1413,45 +3274,7 @@
                         
                         <div class="mb-3">
                             <h6><i class="fas fa-copy me-2"></i>Order Details (copied to clipboard):</h6>
-                            <div class="order-details-preview" id="contact-order-details">
-NEW ORDER FROM VARKA WEBSITE
-================================
-
-ORDER INFORMATION:
-Order ID: VRK-1001
-Date: Today
-Status: PENDING
-
-CUSTOMER DETAILS:
-Name: Sample Customer
-Phone: 9876543210
-Address: Sample Address
-
-ORDER DETAILS:
-Total Items: 2 different designs
-Total Quantity: 3 pieces
-
-1. DEATH T-Shirt
-   Size: M | Fit: Regular
-   Quantity: 2 pieces
-   Unit Price: Rs.999
-   Item Total: Rs.1998
-
-2. HERMES T-Shirt
-   Size: L | Fit: Oversized
-   Quantity: 1 pieces
-   Unit Price: Rs.1149
-   Item Total: Rs.1149
-
-FINANCIAL SUMMARY:
-Items Subtotal: Rs.3147.00
-Taxes: INCLUDED IN PRICES
-Shipping: TO BE CALCULATED
-TOTAL AMOUNT: Rs.3147.00
-
-Thank you for choosing VARKA!
-Contact: varka.clothing@gmail.com | +91 9945268777
-                            </div>
+                            <div class="order-details-preview" id="contact-order-details"></div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-center">
@@ -1460,6 +3283,34 @@ Contact: varka.clothing@gmail.com | +91 9945268777
                         </button>
                         <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
                             <i class="fas fa-times me-2"></i>CLOSE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Detail Modal -->
+        <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderDetailModalLabel">
+                            <i class="fas fa-receipt me-2"></i>ORDER DETAILS
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="order-detail-content">
+                            <!-- Order details will be loaded here -->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">CLOSE</button>
+                        <button type="button" class="btn btn-primary" onclick="printOrderDetail()">
+                            <i class="fas fa-print me-2"></i>PRINT ORDER
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="updateOrderStatus()">
+                            <i class="fas fa-edit me-2"></i>UPDATE STATUS
                         </button>
                     </div>
                 </div>
@@ -1485,6 +3336,11 @@ Contact: varka.clothing@gmail.com | +91 9945268777
                 </button>
             </div>
         </div>
+
+        <!-- Back to Top Button -->
+        <a href="#" class="back-to-top" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -1506,6 +3362,174 @@ Contact: varka.clothing@gmail.com | +91 9945268777
         const VALID_PASSWORD = 'varka_2025';
 
         // Global Variables
+        let cart = [];
+        let wishlist = [];
+        let orders = [];
+        let customers = [];
+        let currentOrderFilter = 'all';
+        let orderIdCounter = 1000;
+        let currentFilter = 'all';
+        let currentSort = 'default';
+        let currentPage = 1;
+
+        // Product Data with complete image structure
+        const products = [
+            {
+                id: 'death',
+                name: 'DEATH',
+                price: 999,
+                description: 'PREMIUM COTTON T-SHIRT WITH STRIKING DESIGN. ULTRA-COMFORTABLE AND DURABLE WITH A BOLD AESTHETIC THAT MAKES A STATEMENT. PERFECT FOR THOSE WHO WANT TO EXPRESS THEIR DARK SIDE WITH STYLE.',
+                badge: 'BESTSELLER',
+                images: {
+                    regular: [
+                        'https://via.placeholder.com/500x600/333/999?text=DEATH+Regular+1',
+                        'https://via.placeholder.com/500x600/333/999?text=DEATH+Regular+2',
+                        'https://via.placeholder.com/500x600/333/999?text=DEATH+Regular+3',
+                        'https://via.placeholder.com/500x600/333/999?text=DEATH+Regular+4',
+                        'https://via.placeholder.com/500x600/333/999?text=DEATH+Regular+5'
+                    ],
+                    oversized: [
+                        'https://via.placeholder.com/500x600/444/999?text=DEATH+Oversized+1',
+                        'https://via.placeholder.com/500x600/444/999?text=DEATH+Oversized+2',
+                        'https://via.placeholder.com/500x600/444/999?text=DEATH+Oversized+3',
+                        'https://via.placeholder.com/500x600/444/999?text=DEATH+Oversized+4',
+                        'https://via.placeholder.com/500x600/444/999?text=DEATH+Oversized+5'
+                    ]
+                }
+            },
+            {
+                id: 'hermes',
+                name: 'CALL OF HERMES',
+                price: 1149,
+                description: 'ULTRA-SOFT, LIGHTWEIGHT, AND BREATHABLE FABRIC FOR MAXIMUM COMFORT. INSPIRED BY GREEK MYTHOLOGY, THIS DESIGN REPRESENTS SPEED, COMMUNICATION, AND DIVINE POWER. PERFECT FOR EVERYDAY WEAR.',
+                badge: 'NEW',
+                images: {
+                    regular: [
+                        'https://via.placeholder.com/500x600/c99238/fff?text=HERMES+Regular+1',
+                        'https://via.placeholder.com/500x600/c99238/fff?text=HERMES+Regular+2',
+                        'https://via.placeholder.com/500x600/c99238/fff?text=HERMES+Regular+3',
+                        'https://via.placeholder.com/500x600/c99238/fff?text=HERMES+Regular+4',
+                        'https://via.placeholder.com/500x600/c99238/fff?text=HERMES+Regular+5'
+                    ],
+                    oversized: [
+                        'https://via.placeholder.com/500x600/b8832a/fff?text=HERMES+Oversized+1',
+                        'https://via.placeholder.com/500x600/b8832a/fff?text=HERMES+Oversized+2',
+                        'https://via.placeholder.com/500x600/b8832a/fff?text=HERMES+Oversized+3',
+                        'https://via.placeholder.com/500x600/b8832a/fff?text=HERMES+Oversized+4',
+                        'https://via.placeholder.com/500x600/b8832a/fff?text=HERMES+Oversized+5'
+                    ]
+                }
+            },
+            {
+                id: 'travis',
+                name: 'TRAVIS SCOTT',
+                price: 1399,
+                description: '100% PURE, LONG-STAPLE COTTON FOR SUPERIOR COMFORT AND DURABILITY. INSPIRED BY STREETWEAR CULTURE AND MODERN AESTHETICS. PREMIUM CONSTRUCTION WITH ATTENTION TO EVERY DETAIL.',
+                badge: 'POPULAR',
+                images: {
+                    regular: [
+                        'https://via.placeholder.com/500x600/27ae60/fff?text=TRAVIS+Regular+1',
+                        'https://via.placeholder.com/500x600/27ae60/fff?text=TRAVIS+Regular+2',
+                        'https://via.placeholder.com/500x600/27ae60/fff?text=TRAVIS+Regular+3',
+                        'https://via.placeholder.com/500x600/27ae60/fff?text=TRAVIS+Regular+4',
+                        'https://via.placeholder.com/500x600/27ae60/fff?text=TRAVIS+Regular+5'
+                    ],
+                    oversized: [
+                        'https://via.placeholder.com/500x600/219a52/fff?text=TRAVIS+Oversized+1',
+                        'https://via.placeholder.com/500x600/219a52/fff?text=TRAVIS+Oversized+2',
+                        'https://via.placeholder.com/500x600/219a52/fff?text=TRAVIS+Oversized+3',
+                        'https://via.placeholder.com/500x600/219a52/fff?text=TRAVIS+Oversized+4',
+                        'https://via.placeholder.com/500x600/219a52/fff?text=TRAVIS+Oversized+5'
+                    ]
+                }
+            }
+        ];
+
+        // Generate additional products with complete descriptions and image structure
+        const additionalProducts = [];
+        const productNames = [
+            'YOUR DIRECTIONS', 'ATLAS', 'SOCIAL INTROVERT', 'REBEAL', 'CONSTRICE',
+            'LEGION OF HONOR', 'MASTER PRETENDER', 'PARANOIA', 'URBAN CRAWLER', 'BREAK RULES',
+            'YAKUZA', 'NØTIX', 'SNAKEMAN SURGE', 'OVERTHINKING', 'ASTRO NOVA',
+            'SKY BOUND', 'WIND RUSH', 'ATOMIC', 'IMPACT', 'GUARDIAN', 'SAVAGE'
+        ];
+
+        const detailedDescriptions = [
+            'FIND YOUR PATH WITH THIS MOTIVATIONAL DESIGN. PREMIUM COTTON BLEND FOR ULTIMATE COMFORT AND DURABILITY.',
+            'EXPLORE THE WORLD WITH THIS ADVENTURE-INSPIRED DESIGN. HIGH-QUALITY FABRIC WITH SUPERIOR CRAFTSMANSHIP.',
+            'PERFECT FOR INTROVERTS WHO PREFER QUALITY CONVERSATIONS. SOFT, COMFORTABLE, AND STYLISH EVERYDAY WEAR.',
+            'REBEL WITH A CAUSE. BOLD DESIGN FOR THOSE WHO DARE TO BE DIFFERENT. PREMIUM MATERIALS AND CONSTRUCTION.',
+            'ARTISTIC EXPRESSION MEETS COMFORT. UNIQUE DESIGN THAT STANDS OUT FROM THE CROWD. SUPERIOR QUALITY FABRIC.',
+            'HONOR YOUR ACHIEVEMENTS WITH THIS PRESTIGIOUS DESIGN. LUXURY COTTON WITH EXCEPTIONAL COMFORT AND STYLE.',
+            'MASTER THE ART OF SUBTLETY. SOPHISTICATED DESIGN FOR THE MODERN GENTLEMAN. PREMIUM QUALITY GUARANTEED.',
+            'EMBRACE YOUR INNER THOUGHTS. DEEP, MEANINGFUL DESIGN FOR PHILOSOPHICAL MINDS. ULTRA-COMFORTABLE WEAR.',
+            'URBAN LIFESTYLE MEETS PREMIUM COMFORT. PERFECT FOR CITY ADVENTURES. DURABLE AND STYLISH CONSTRUCTION.',
+            'BREAK FREE FROM CONVENTIONS. REVOLUTIONARY DESIGN FOR FREE SPIRITS. HIGH-QUALITY MATERIALS AND CRAFTSMANSHIP.',
+            'JAPANESE-INSPIRED DESIGN WITH MODERN AESTHETICS. PREMIUM COTTON FOR ULTIMATE COMFORT AND DURABILITY.',
+            'FUTURISTIC DESIGN FOR THE TECH-SAVVY GENERATION. INNOVATIVE STYLE WITH SUPERIOR COMFORT AND QUALITY.',
+            'POWER AND STRENGTH IN EVERY THREAD. BOLD DESIGN FOR CONFIDENT INDIVIDUALS. PREMIUM MATERIALS GUARANTEED.',
+            'FOR THE DEEP THINKERS AND PHILOSOPHERS. THOUGHTFUL DESIGN WITH EXCEPTIONAL COMFORT AND STYLE.',
+            'REACH FOR THE STARS WITH THIS COSMIC DESIGN. PREMIUM QUALITY FABRIC WITH SUPERIOR CRAFTSMANSHIP.',
+            'SOAR TO NEW HEIGHTS WITH THIS AVIATION-INSPIRED DESIGN. COMFORTABLE, DURABLE, AND STYLISH EVERYDAY WEAR.',
+            'FEEL THE RUSH OF ADVENTURE. DYNAMIC DESIGN FOR ACTIVE LIFESTYLES. HIGH-QUALITY CONSTRUCTION AND COMFORT.',
+            'ATOMIC ENERGY MEETS FASHION. POWERFUL DESIGN FOR STRONG PERSONALITIES. PREMIUM COTTON WITH SUPERIOR QUALITY.',
+            'MAKE AN IMPACT WITH THIS BOLD STATEMENT PIECE. EXCEPTIONAL COMFORT AND DURABILITY IN EVERY THREAD.',
+            'PROTECT WHAT MATTERS WITH THIS GUARDIAN-INSPIRED DESIGN. PREMIUM MATERIALS FOR ULTIMATE COMFORT.',
+            'UNLEASH YOUR WILD SIDE WITH THIS FIERCE DESIGN. SUPERIOR QUALITY AND COMFORT FOR THE BOLD AND BRAVE.'
+        ];
+
+        const colors = ['e74c3c', 'f39c12', '9b59b6', '3498db', '1abc9c', '2ecc71', 'f1c40f', 'e67e22', '95a5a6', '34495e'];
+
+        for (let i = 0; i < 21; i++) {
+            const name = productNames[i] || `DESIGN ${i + 1}`;
+            let price = 899 + Math.floor(Math.random() * 600);
+            const badges = ['NEW', 'POPULAR', 'LIMITED', 'TRENDING', 'BESTSELLER'];
+            let badge = badges[Math.floor(Math.random() * badges.length)];
+            let description = detailedDescriptions[i] || `PREMIUM QUALITY T-SHIRT WITH UNIQUE ${name} DESIGN. CRAFTED WITH ATTENTION TO DETAIL AND SUPERIOR COMFORT.`;
+            
+            const folderName = name.toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '')
+                .replace(/-+/g, '-')
+                .replace(/^-|-$/g, '');
+
+            const color1 = colors[i % colors.length];
+            const color2 = colors[(i + 1) % colors.length];
+            
+            additionalProducts.push({
+                id: folderName,
+                name: name,
+                price: price,
+                description: description,
+                badge: badge,
+                images: {
+                    regular: [
+                        `https://via.placeholder.com/500x600/${color1}/fff?text=${encodeURIComponent(name)}+Regular+1`,
+                        `https://via.placeholder.com/500x600/${color1}/fff?text=${encodeURIComponent(name)}+Regular+2`,
+                        `https://via.placeholder.com/500x600/${color1}/fff?text=${encodeURIComponent(name)}+Regular+3`,
+                        `https://via.placeholder.com/500x600/${color1}/fff?text=${encodeURIComponent(name)}+Regular+4`,
+                        `https://via.placeholder.com/500x600/${color1}/fff?text=${encodeURIComponent(name)}+Regular+5`
+                    ],
+                    oversized: [
+                        `https://via.placeholder.com/500x600/${color2}/fff?text=${encodeURIComponent(name)}+Oversized+1`,
+                        `https://via.placeholder.com/500x600/${color2}/fff?text=${encodeURIComponent(name)}+Oversized+2`,
+                        `https://via.placeholder.com/500x600/${color2}/fff?text=${encodeURIComponent(name)}+Oversized+3`,
+                        `https://via.placeholder.com/500x600/${color2}/fff?text=${encodeURIComponent(name)}+Oversized+4`,
+                        `https://via.placeholder.com/500x600/${color2}/fff?text=${encodeURIComponent(name)}+Oversized+5`
+                    ]
+                }
+            });
+        }
+
+        const allProducts = [...products, ...additionalProducts];
+
+        // Global variables for product detail
+        let currentProduct = null;
+        let selectedFit = 'regular';
+        let selectedSize = 'M';
+        let selectedQuantity = 1;
+
+        // Global variable to store current order details for contact
         let currentOrderForContact = null;
 
         // Login Functions
@@ -1569,21 +3593,1437 @@ Contact: varka.clothing@gmail.com | +91 9945268777
         }
 
         function initializeWebsite() {
-            // Initialize any required data
-            console.log('Website initialized');
+            loadCart();
+            loadWishlist();
+            loadBusinessData();
+        }
+
+        // Business Management Functions
+        function loadBusinessData() {
+            const savedOrders = sessionStorage.getItem('varkaOrders');
+            const savedCustomers = sessionStorage.getItem('varkaCustomers');
+            const savedCounter = sessionStorage.getItem('varkaOrderCounter');
+            
+            if (savedOrders) {
+                try {
+                    orders = JSON.parse(savedOrders);
+                } catch (e) {
+                    orders = [];
+                }
+            }
+            
+            if (savedCustomers) {
+                try {
+                    customers = JSON.parse(savedCustomers);
+                } catch (e) {
+                    customers = [];
+                }
+            }
+            
+            if (savedCounter) {
+                orderIdCounter = parseInt(savedCounter) || 1000;
+            }
+            
+            updateDashboardStats();
+            updateOrdersDisplay();
+        }
+
+        function saveBusinessData() {
+            sessionStorage.setItem('varkaOrders', JSON.stringify(orders));
+            sessionStorage.setItem('varkaCustomers', JSON.stringify(customers));
+            sessionStorage.setItem('varkaOrderCounter', orderIdCounter.toString());
+        }
+
+        function updateDashboardStats() {
+            const totalOrders = orders.length;
+            const totalCustomers = customers.length;
+            const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+            const totalItemsSold = orders.reduce((sum, order) => 
+                sum + order.items.reduce((itemSum, item) => itemSum + item.quantity, 0), 0);
+            
+            document.getElementById('total-orders-count').textContent = totalOrders;
+            document.getElementById('total-customers-count').textContent = totalCustomers;
+            document.getElementById('total-revenue').textContent = `₹${totalRevenue.toLocaleString()}`;
+            document.getElementById('total-items-sold').textContent = totalItemsSold;
+        }
+
+        // Order Management
+        async function createOrder(customerData, cartItems, orderNotes = '') {
+            const orderId = `VRK-${orderIdCounter++}`;
+            const orderDate = new Date().toISOString();
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            const order = {
+                id: orderId,
+                orderNumber: orderIdCounter - 1,
+                date: orderDate,
+                customer: {
+                    name: customerData.name,
+                    phone: customerData.phone,
+                    email: customerData.email || '',
+                    address: customerData.address
+                },
+                items: cartItems.map(item => ({
+                    ...item,
+                    id: Date.now() + Math.random()
+                })),
+                subtotal: subtotal,
+                total: subtotal,
+                status: 'pending',
+                notes: orderNotes,
+                createdAt: new Date().toLocaleString(),
+                updatedAt: new Date().toLocaleString()
+            };
+            
+            orders.unshift(order);
+            
+            // Add/Update customer
+            const existingCustomerIndex = customers.findIndex(c => c.phone === customerData.phone);
+            if (existingCustomerIndex > -1) {
+                customers[existingCustomerIndex].lastOrderDate = orderDate;
+                customers[existingCustomerIndex].totalOrders += 1;
+                customers[existingCustomerIndex].totalSpent += subtotal;
+                customers[existingCustomerIndex].updatedAt = new Date().toLocaleString();
+            } else {
+                customers.push({
+                    id: Date.now() + Math.random(),
+                    name: customerData.name,
+                    phone: customerData.phone,
+                    email: customerData.email || '',
+                    address: customerData.address,
+                    firstOrderDate: orderDate,
+                    lastOrderDate: orderDate,
+                    totalOrders: 1,
+                    totalSpent: subtotal,
+                    createdAt: new Date().toLocaleString(),
+                    updatedAt: new Date().toLocaleString()
+                });
+            }
+            
+            saveBusinessData();
+            updateDashboardStats();
+            updateOrdersDisplay();
+            
+            return order;
+        }
+
+        function filterOrders(status) {
+            currentOrderFilter = status;
+            updateOrdersDisplay();
+        }
+
+        function updateOrdersDisplay() {
+            const ordersContainer = document.getElementById('orders-table');
+            
+            let filteredOrders = orders;
+            if (currentOrderFilter !== 'all') {
+                filteredOrders = orders.filter(order => order.status === currentOrderFilter);
+            }
+            
+            if (filteredOrders.length === 0) {
+                ordersContainer.innerHTML = `
+                    <div class="empty-orders-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <h4>NO ORDERS FOUND</h4>
+                        <p>No orders match the selected filter criteria.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let ordersHTML = `
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>ORDER ID</th>
+                            <th>CUSTOMER</th>
+                            <th>DATE</th>
+                            <th>ITEMS</th>
+                            <th>TOTAL</th>
+                            <th>STATUS</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            filteredOrders.forEach(order => {
+                const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
+                ordersHTML += `
+                    <tr>
+                        <td><strong>${order.id}</strong></td>
+                        <td>
+                            <div>
+                                <strong>${order.customer.name}</strong><br>
+                                <small>${order.customer.phone}</small>
+                            </div>
+                        </td>
+                        <td>${new Date(order.date).toLocaleDateString()}</td>
+                        <td>${itemCount} items</td>
+                        <td><strong>₹${order.total.toLocaleString()}</strong></td>
+                        <td><span class="order-status ${order.status}">${order.status.toUpperCase()}</span></td>
+                        <td>
+                            <div class="order-actions">
+                                <button class="order-action-btn view" onclick="viewOrderDetail('${order.id}')" title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="order-action-btn edit" onclick="editOrderStatus('${order.id}')" title="Edit Status">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="order-action-btn delete" onclick="deleteOrder('${order.id}')" title="Delete Order">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            ordersHTML += `
+                    </tbody>
+                </table>
+            `;
+            
+            ordersContainer.innerHTML = ordersHTML;
+        }
+
+        function viewOrderDetail(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            window.currentViewingOrder = order;
+            
+            const orderDetailContent = `
+                <div class="order-detail-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3>ORDER ${order.id}</h3>
+                            <p class="mb-0">Created: ${order.createdAt}</p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="order-status ${order.status} fs-5">${order.status.toUpperCase()}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-detail-info">
+                    <div class="order-info-item">
+                        <div class="order-info-label">Customer Name</div>
+                        <div class="order-info-value">${order.customer.name}</div>
+                    </div>
+                    <div class="order-info-item">
+                        <div class="order-info-label">Phone Number</div>
+                        <div class="order-info-value">${order.customer.phone}</div>
+                    </div>
+                    <div class="order-info-item">
+                        <div class="order-info-label">Email</div>
+                        <div class="order-info-value">${order.customer.email || 'Not provided'}</div>
+                    </div>
+                    <div class="order-info-item">
+                        <div class="order-info-label">Order Date</div>
+                        <div class="order-info-value">${new Date(order.date).toLocaleDateString()}</div>
+                    </div>
+                </div>
+                
+                <div class="order-info-item mb-4">
+                    <div class="order-info-label">Delivery Address</div>
+                    <div class="order-info-value">${order.customer.address}</div>
+                </div>
+                
+                <h5 class="mb-3">Order Items</h5>
+                <table class="order-items-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Size</th>
+                            <th>Fit</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${order.items.map(item => `
+                            <tr>
+                                <td><strong>${item.name}</strong></td>
+                                <td>${item.size}</td>
+                                <td>${item.fit}</td>
+                                <td>${item.quantity}</td>
+                                <td>₹${item.price}</td>
+                                <td><strong>₹${(item.price * item.quantity).toLocaleString()}</strong></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                
+                <div class="order-total-section">
+                    <div class="order-total-row">
+                        <span>Subtotal:</span>
+                        <span>₹${order.subtotal.toLocaleString()}</span>
+                    </div>
+                    <div class="order-total-row">
+                        <span>Shipping:</span>
+                        <span>To be calculated</span>
+                    </div>
+                    <div class="order-total-row">
+                        <span>Total:</span>
+                        <span>₹${order.total.toLocaleString()}</span>
+                    </div>
+                </div>
+                
+                ${order.notes ? `
+                    <div class="order-info-item mt-4">
+                        <div class="order-info-label">Special Instructions</div>
+                        <div class="order-info-value">${order.notes}</div>
+                    </div>
+                ` : ''}
+            `;
+            
+            document.getElementById('order-detail-content').innerHTML = orderDetailContent;
+            
+            const orderDetailModal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
+            orderDetailModal.show();
+        }
+
+        function editOrderStatus(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const statuses = ['pending', 'processing', 'completed', 'cancelled'];
+            
+            const statusOptions = statuses.map(status => 
+                `<option value="${status}" ${status === order.status ? 'selected' : ''}>${status.toUpperCase()}</option>`
+            ).join('');
+            
+            const statusModal = document.createElement('div');
+            statusModal.className = 'modal fade';
+            statusModal.innerHTML = `
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Order Status - ${order.id}</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Current Status: <strong>${order.status.toUpperCase()}</strong></label>
+                                <select id="new-status" class="form-select">
+                                    ${statusOptions}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Status Update Notes (Optional)</label>
+                                <textarea id="status-notes" class="form-control" rows="3" placeholder="Add any notes about this status change..."></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="saveOrderStatus('${orderId}')">Update Status</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(statusModal);
+            const modal = new bootstrap.Modal(statusModal);
+            modal.show();
+            
+            statusModal.addEventListener('hidden.bs.modal', function () {
+                document.body.removeChild(statusModal);
+            });
+        }
+
+        function saveOrderStatus(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+            
+            const newStatus = document.getElementById('new-status').value;
+            const statusNotes = document.getElementById('status-notes').value;
+            
+            order.status = newStatus;
+            order.updatedAt = new Date().toLocaleString();
+            
+            if (statusNotes) {
+                if (!order.statusHistory) order.statusHistory = [];
+                order.statusHistory.push({
+                    status: newStatus,
+                    notes: statusNotes,
+                    timestamp: new Date().toLocaleString()
+                });
+            }
+            
+            saveBusinessData();
+            updateOrdersDisplay();
+            
+            const modal = bootstrap.Modal.getInstance(document.querySelector('.modal.show'));
+            modal.hide();
+            
+            showNotification(`Order ${orderId} status updated to ${newStatus.toUpperCase()}!`, 'success');
+        }
+
+        function deleteOrder(orderId) {
+            if (!confirm(`Are you sure you want to delete order ${orderId}? This action cannot be undone.`)) {
+                return;
+            }
+            
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+            if (orderIndex > -1) {
+                orders.splice(orderIndex, 1);
+                saveBusinessData();
+                updateDashboardStats();
+                updateOrdersDisplay();
+                showNotification(`Order ${orderId} deleted successfully!`, 'warning');
+            }
+        }
+
+        // Export Functions
+        function exportOrdersToCSV() {
+            if (orders.length === 0) {
+                showNotification('NO ORDERS TO EXPORT!', 'warning');
+                return;
+            }
+            
+            const headers = [
+                'Order ID', 'Order Number', 'Date', 'Customer Name', 'Phone', 'Email', 
+                'Address', 'Items Count', 'Total Quantity', 'Subtotal', 'Total', 'Status', 'Notes', 'Created At'
+            ];
+            
+            const csvData = orders.map(order => {
+                const itemCount = order.items.length;
+                const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
+                
+                return [
+                    order.id,
+                    order.orderNumber,
+                    new Date(order.date).toLocaleDateString(),
+                    order.customer.name,
+                    order.customer.phone,
+                    order.customer.email || '',
+                    `"${order.customer.address.replace(/"/g, '""')}"`,
+                    itemCount,
+                    totalQuantity,
+                    order.subtotal,
+                    order.total,
+                    order.status,
+                    `"${(order.notes || '').replace(/"/g, '""')}"`,
+                    order.createdAt
+                ];
+            });
+            
+            const csvContent = [headers, ...csvData].map(row => row.join(',')).join('\n');
+            downloadCSV(csvContent, `varka-orders-${new Date().toISOString().split('T')[0]}.csv`);
+            
+            showNotification('ORDERS EXPORTED SUCCESSFULLY!', 'success');
+        }
+
+        function exportCustomersToCSV() {
+            if (customers.length === 0) {
+                showNotification('NO CUSTOMERS TO EXPORT!', 'warning');
+                return;
+            }
+            
+            const headers = [
+                'Customer ID', 'Name', 'Phone', 'Email', 'Address', 'First Order Date', 
+                'Last Order Date', 'Total Orders', 'Total Spent', 'Created At', 'Updated At'
+            ];
+            
+            const csvData = customers.map(customer => [
+                customer.id,
+                customer.name,
+                customer.phone,
+                customer.email || '',
+                `"${customer.address.replace(/"/g, '""')}"`,
+                new Date(customer.firstOrderDate).toLocaleDateString(),
+                new Date(customer.lastOrderDate).toLocaleDateString(),
+                customer.totalOrders,
+                customer.totalSpent,
+                customer.createdAt,
+                customer.updatedAt
+            ]);
+            
+            const csvContent = [headers, ...csvData].map(row => row.join(',')).join('\n');
+            downloadCSV(csvContent, `varka-customers-${new Date().toISOString().split('T')[0]}.csv`);
+            
+            showNotification('CUSTOMERS EXPORTED SUCCESSFULLY!', 'success');
+        }
+
+        function downloadCSV(csvContent, filename) {
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        function clearAllData() {
+            if (!confirm('Are you sure you want to clear ALL business data? This includes orders, customers, and statistics. This action cannot be undone.')) {
+                return;
+            }
+            
+            if (!confirm('This will permanently delete all your business data. Type "CLEAR" in the next prompt to confirm.')) {
+                return;
+            }
+            
+            const confirmation = prompt('Type "CLEAR" to confirm deletion:');
+            if (confirmation !== 'CLEAR') {
+                showNotification('DATA DELETION CANCELLED!', 'info');
+                return;
+            }
+            
+            orders = [];
+            customers = [];
+            orderIdCounter = 1000;
+            
+            sessionStorage.removeItem('varkaOrders');
+            sessionStorage.removeItem('varkaCustomers');
+            sessionStorage.removeItem('varkaOrderCounter');
+            
+            updateDashboardStats();
+            updateOrdersDisplay();
+            
+            showNotification('ALL BUSINESS DATA CLEARED!', 'warning');
+        }
+
+        function printOrderDetail() {
+            if (!window.currentViewingOrder) return;
+            
+            const order = window.currentViewingOrder;
+            const printContent = generateDetailedOrderPrint(order);
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function generateDetailedOrderPrint(order) {
+            const itemsHTML = order.items.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.size}</td>
+                    <td>${item.fit}</td>
+                    <td style="text-align: center;">${item.quantity}</td>
+                    <td style="text-align: right;">₹${item.price}</td>
+                    <td style="text-align: right;">₹${(item.price * item.quantity).toLocaleString()}</td>
+                </tr>
+            `).join('');
+            
+            return `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>VARKA Order ${order.id}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+                        .header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid #c99238; padding-bottom: 20px; }
+                        .company-name { font-size: 2.5em; font-weight: bold; color: #26231b; margin: 0; }
+                        .company-tagline { color: #666; margin: 5px 0 0 0; }
+                        .order-info { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
+                        .info-section { background: #f8f9fa; padding: 20px; border-radius: 8px; }
+                        .info-title { font-size: 1.2em; font-weight: bold; color: #26231b; margin-bottom: 15px; border-bottom: 2px solid #c99238; padding-bottom: 5px; }
+                        .info-row { margin: 8px 0; }
+                        .info-label { font-weight: bold; color: #555; }
+                        .items-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        .items-table th { background: #26231b; color: white; padding: 12px; text-align: left; }
+                        .items-table td { padding: 10px; border-bottom: 1px solid #ddd; }
+                        .items-table tbody tr:nth-child(even) { background: #f8f9fa; }
+                        .totals { text-align: right; margin-top: 20px; background: #f8f9fa; padding: 20px; border-radius: 8px; }
+                        .total-row { margin: 8px 0; font-size: 1.1em; }
+                        .final-total { font-size: 1.3em; font-weight: bold; color: #26231b; border-top: 2px solid #c99238; padding-top: 10px; margin-top: 10px; }
+                        .footer { margin-top: 40px; text-align: center; color: #666; border-top: 1px solid #ddd; padding-top: 20px; }
+                        .status { padding: 8px 16px; border-radius: 20px; font-weight: bold; text-transform: uppercase; }
+                        .status.pending { background: #fff3cd; color: #856404; }
+                        .status.processing { background: #cce5ff; color: #004085; }
+                        .status.completed { background: #d4edda; color: #155724; }
+                        .status.cancelled { background: #f8d7da; color: #721c24; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1 class="company-name">VARKA</h1>
+                        <p class="company-tagline">Premium Custom Clothing</p>
+                        <h2>ORDER INVOICE</h2>
+                    </div>
+                    
+                    <div class="order-info">
+                        <div class="info-section">
+                            <div class="info-title">Order Information</div>
+                            <div class="info-row"><span class="info-label">Order ID:</span> ${order.id}</div>
+                            <div class="info-row"><span class="info-label">Order Number:</span> ${order.orderNumber}</div>
+                            <div class="info-row"><span class="info-label">Date:</span> ${new Date(order.date).toLocaleDateString()}</div>
+                            <div class="info-row"><span class="info-label">Status:</span> <span class="status ${order.status}">${order.status}</span></div>
+                            <div class="info-row"><span class="info-label">Created:</span> ${order.createdAt}</div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-title">Customer Information</div>
+                            <div class="info-row"><span class="info-label">Name:</span> ${order.customer.name}</div>
+                            <div class="info-row"><span class="info-label">Phone:</span> ${order.customer.phone}</div>
+                            <div class="info-row"><span class="info-label">Email:</span> ${order.customer.email || 'Not provided'}</div>
+                            <div class="info-row"><span class="info-label">Address:</span><br>${order.customer.address}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-title">Order Items</div>
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Fit</th>
+                                <th style="text-align: center;">Quantity</th>
+                                <th style="text-align: right;">Unit Price</th>
+                                <th style="text-align: right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${itemsHTML}
+                        </tbody>
+                    </table>
+                    
+                    <div class="totals">
+                        <div class="total-row">Subtotal: ₹${order.subtotal.toLocaleString()}</div>
+                        <div class="total-row">Taxes: Included in prices</div>
+                        <div class="total-row">Shipping: To be calculated</div>
+                        <div class="final-total">Total: ₹${order.total.toLocaleString()}</div>
+                    </div>
+                    
+                    ${order.notes ? `
+                        <div class="info-section" style="margin-top: 30px;">
+                            <div class="info-title">Special Instructions</div>
+                            <p>${order.notes}</p>
+                        </div>
+                    ` : ''}
+                    
+                    <div class="footer">
+                        <p><strong>VARKA - Premium Custom Clothing</strong></p>
+                        <p>Email: varka.clothing@gmail.com | Phone: +91 9945268777</p>
+                        <p>Thank you for your business!</p>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
+        // Cart Functions
+        function loadCart() {
+            const savedCart = sessionStorage.getItem('varkaCart');
+            if (savedCart) {
+                try {
+                    cart = JSON.parse(savedCart);
+                } catch (e) {
+                    cart = [];
+                }
+            }
+            updateCartDisplay();
+        }
+
+        function saveCart() {
+            sessionStorage.setItem('varkaCart', JSON.stringify(cart));
+        }
+
+        function addToCart(productName, price, imageUrl, size, fit, quantity = 1) {
+            const existingItemIndex = cart.findIndex(item => 
+                item.name === productName && item.size === size && item.fit === fit
+            );
+            
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += quantity;
+            } else {
+                cart.push({
+                    id: Date.now() + Math.random(),
+                    name: productName,
+                    price: price,
+                    quantity: quantity,
+                    image: imageUrl,
+                    size: size,
+                    fit: fit
+                });
+            }
+            
+            saveCart();
+            updateCartDisplay();
+            showNotification(`${productName} (${size}, ${fit}) × ${quantity} ADDED TO CART!`);
+        }
+
+        function updateCartDisplay() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCountElement = document.querySelector('.cart-count');
+            cartCountElement.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                cartCountElement.style.animation = 'pulse 0.5s ease-in-out';
+                setTimeout(() => {
+                    cartCountElement.style.animation = '';
+                }, 500);
+            }
+            
+            updateCartContent();
+        }
+
+        function updateCartContent() {
+            const cartContentElement = document.getElementById('cart-content');
+            
+            if (cart.length === 0) {
+                cartContentElement.innerHTML = `
+                    <div class="empty-cart-state">
+                        <div class="empty-cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3 class="empty-cart-title">YOUR CART IS EMPTY</h3>
+                        <p class="empty-cart-text">ADD SOME AMAZING PRODUCTS TO YOUR CART FROM OUR COLLECTIONS.</p>
+                        <button class="btn btn-primary btn-lg" onclick="showPage('collections')">
+                            <i class="fas fa-shopping-bag"></i> START SHOPPING
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let subtotal = 0;
+            let cartHTML = `
+                <div class="table-responsive">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>PRODUCT</th>
+                                <th>PRICE</th>
+                                <th>SIZE</th>
+                                <th>FIT</th>
+                                <th>QUANTITY</th>
+                                <th>TOTAL</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                cartHTML += `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="${item.image}" alt="${item.name}" class="cart-item-img me-3">
+                                <span class="cart-item-title">${item.name}</span>
+                            </div>
+                        </td>
+                        <td class="cart-item-price">₹${item.price}</td>
+                        <td><span class="badge bg-primary">${item.size}</span></td>
+                        <td><span class="badge bg-secondary">${item.fit}</span></td>
+                        <td>
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(${index}, -1)">-</button>
+                                <input type="text" class="quantity-input" value="${item.quantity}" readonly>
+                                <button class="quantity-btn" onclick="updateQuantity(${index}, 1)">+</button>
+                            </div>
+                        </td>
+                        <td><strong>₹${itemTotal}</strong></td>
+                        <td><i class="fas fa-times remove-item" onclick="removeItem(${index})" title="Remove item"></i></td>
+                    </tr>
+                `;
+            });
+            
+            const total = subtotal;
+            
+            cartHTML += `
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="row justify-content-end mt-4">
+                    <div class="col-md-5">
+                        <div class="cart-totals">
+                            <div class="cart-total-row">
+                                <span>SUBTOTAL:</span>
+                                <span>₹${subtotal.toFixed(2)}</span>
+                            </div>
+                            <div class="cart-total-row">
+                                <span>SHIPPING:</span>
+                                <span>CALCULATED AT CHECKOUT</span>
+                            </div>
+                            <div class="cart-total-row">
+                                <span>TOTAL:</span>
+                                <span>₹${total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-grid gap-2">
+                            <button class="btn btn-success btn-lg" onclick="proceedToCheckout()">
+                                <i class="fas fa-credit-card"></i> PROCEED TO CHECKOUT
+                            </button>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-outline-primary flex-fill" onclick="printOrder()">
+                                    <i class="fas fa-print"></i> PRINT ORDER
+                                </button>
+                                <button class="btn btn-outline-danger flex-fill" onclick="clearCart()">
+                                    <i class="fas fa-trash"></i> CLEAR CART
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            cartContentElement.innerHTML = cartHTML;
+        }
+
+        function updateQuantity(index, change) {
+            const item = cart[index];
+            let newQuantity = item.quantity + change;
+            
+            if (newQuantity <= 0) {
+                cart.splice(index, 1);
+            } else {
+                item.quantity = newQuantity;
+            }
+            
+            saveCart();
+            updateCartDisplay();
+        }
+
+        function removeItem(index) {
+            const itemName = cart[index].name;
+            cart.splice(index, 1);
+            saveCart();
+            updateCartDisplay();
+            showNotification(`${itemName} REMOVED FROM CART!`, 'warning');
+        }
+
+        function clearCart() {
+            if (cart.length === 0) return;
+            
+            if (confirm('Are you sure you want to clear your cart?')) {
+                cart = [];
+                saveCart();
+                updateCartDisplay();
+                showNotification('CART CLEARED!', 'info');
+            }
+        }
+
+        function printOrder() {
+            if (cart.length === 0) {
+                showNotification('CART IS EMPTY!', 'warning');
+                return;
+            }
+            
+            const printContent = generateOrderPrintContent();
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function generateOrderPrintContent() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            let printHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>VARKA Order Summary</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .header { text-align: center; margin-bottom: 30px; }
+                        .order-details { margin-bottom: 20px; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                        th { background-color: #f8f9fa; font-weight: bold; }
+                        .total-row { font-weight: bold; background-color: #f8f9fa; }
+                        .company-info { margin-top: 30px; text-align: center; font-size: 12px; color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>VARKA</h1>
+                        <h2>Order Summary</h2>
+                        <p>Date: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                    
+                    <div class="order-details">
+                        <h3>Order Items (Total: ${totalQuantity} pieces)</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Size</th>
+                                    <th>Fit</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+            `;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                printHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.size}</td>
+                        <td>${item.fit}</td>
+                        <td>${item.quantity}</td>
+                        <td>₹${item.price}</td>
+                        <td>₹${itemTotal}</td>
+                    </tr>
+                `;
+            });
+            
+            printHTML += `
+                            <tr class="total-row">
+                                <td colspan="5">SUBTOTAL</td>
+                                <td>₹${subtotal.toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">SHIPPING</td>
+                                <td>TBD</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td colspan="5">TOTAL</td>
+                                <td>₹${subtotal.toFixed(2)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="company-info">
+                    <p>VARKA - Premium Custom Clothing</p>
+                    <p>Email: varka.clothing@gmail.com | Phone: +91 9945268777</p>
+                </div>
+            </body>
+            </html>
+            `;
+            
+            return printHTML;
+        }
+
+        // Wishlist Functions
+        function loadWishlist() {
+            const savedWishlist = sessionStorage.getItem('varkaWishlist');
+            if (savedWishlist) {
+                try {
+                    wishlist = JSON.parse(savedWishlist);
+                } catch (e) {
+                    wishlist = [];
+                }
+            }
+            updateWishlistDisplay();
+        }
+
+        function saveWishlist() {
+            sessionStorage.setItem('varkaWishlist', JSON.stringify(wishlist));
+        }
+
+        function toggleWishlist(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingIndex = wishlist.findIndex(item => item.id === productId);
+            
+            if (existingIndex > -1) {
+                wishlist.splice(existingIndex, 1);
+                showNotification(`${product.name} REMOVED FROM WISHLIST!`, 'info');
+            } else {
+                wishlist.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.images.regular[0],
+                    dateAdded: new Date().toISOString()
+                });
+                showNotification(`${product.name} ADDED TO WISHLIST!`, 'success');
+            }
+            
+            saveWishlist();
+            updateWishlistDisplay();
+            updateWishlistButtons();
+        }
+
+        function updateWishlistDisplay() {
+            const totalItems = wishlist.length;
+            const wishlistCountElement = document.querySelector('.wishlist-count');
+            wishlistCountElement.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                wishlistCountElement.style.animation = 'pulse 0.5s ease-in-out';
+                setTimeout(() => {
+                    wishlistCountElement.style.animation = '';
+                }, 500);
+            }
+            
+            updateWishlistContent();
+        }
+
+        function updateWishlistContent() {
+            const wishlistContentElement = document.getElementById('wishlist-content');
+            
+            if (wishlist.length === 0) {
+                wishlistContentElement.innerHTML = `
+                    <div class="empty-wishlist-state">
+                        <div class="empty-wishlist-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3 class="empty-wishlist-title">YOUR WISHLIST IS EMPTY</h3>
+                        <p class="empty-wishlist-text">START BROWSING OUR COLLECTION AND ADD ITEMS TO YOUR WISHLIST.</p>
+                        <button class="btn btn-wishlist btn-lg" onclick="showPage('collections')">
+                            <i class="fas fa-shopping-bag"></i> START SHOPPING
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let wishlistHTML = `
+                <div class="table-responsive">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>PRODUCT</th>
+                                <th>PRICE</th>
+                                <th>DATE ADDED</th>
+                                <th>ACTIONS</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+            
+            wishlist.forEach((item, index) => {
+                wishlistHTML += `
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="${item.image}" alt="${item.name}" class="cart-item-img me-3">
+                                <span class="cart-item-title">${item.name}</span>
+                            </div>
+                        </td>
+                        <td class="cart-item-price">₹${item.price}</td>
+                        <td>${new Date(item.dateAdded).toLocaleDateString()}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm me-2" onclick="addToCart('${item.name}', ${item.price}, '${item.image}', 'M', 'Regular', 1)">
+                                <i class="fas fa-cart-plus"></i> ADD TO CART
+                            </button>
+                        </td>
+                        <td><i class="fas fa-times remove-item" onclick="removeFromWishlist(${index})" title="Remove from wishlist"></i></td>
+                    </tr>
+                `;
+            });
+            
+            wishlistHTML += `
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn btn-outline-danger me-3" onclick="clearWishlist()">
+                        <i class="fas fa-trash"></i> CLEAR WISHLIST
+                    </button>
+                    <button class="btn btn-primary" onclick="addAllToCart()">
+                        <i class="fas fa-cart-plus"></i> ADD ALL TO CART
+                    </button>
+                </div>
+            `;
+            
+            wishlistContentElement.innerHTML = wishlistHTML;
+        }
+
+        function removeFromWishlist(index) {
+            const itemName = wishlist[index].name;
+            wishlist.splice(index, 1);
+            saveWishlist();
+            updateWishlistDisplay();
+            updateWishlistButtons();
+            showNotification(`${itemName} REMOVED FROM WISHLIST!`, 'warning');
+        }
+
+        function clearWishlist() {
+            if (wishlist.length === 0) return;
+            
+            if (confirm('Are you sure you want to clear your entire wishlist?')) {
+                wishlist = [];
+                saveWishlist();
+                updateWishlistDisplay();
+                updateWishlistButtons();
+                showNotification('WISHLIST CLEARED!', 'info');
+            }
+        }
+
+        function addAllToCart() {
+            if (wishlist.length === 0) {
+                showNotification('YOUR WISHLIST IS EMPTY!', 'warning');
+                return;
+            }
+            
+            let addedCount = 0;
+            wishlist.forEach(item => {
+                addToCart(item.name, item.price, item.image, 'M', 'Regular', 1);
+                addedCount++;
+            });
+            
+            showNotification(`${addedCount} ITEMS ADDED TO CART FROM WISHLIST!`, 'success');
+        }
+
+        function updateWishlistButtons() {
+            document.querySelectorAll('.wishlist-btn').forEach(btn => {
+                const productCard = btn.closest('.product-card');
+                if (productCard) {
+                    const productId = productCard.onclick.toString().match(/'([^']+)'/)?.[1];
+                    if (productId) {
+                        const isInWishlist = wishlist.some(item => item.id === productId);
+                        btn.classList.toggle('active', isInWishlist);
+                    }
+                }
+            });
+        }
+
+        // Collections Functions
+        function loadCollections() {
+            const grid = document.getElementById('collections-grid');
+            grid.innerHTML = '';
+            
+            let filteredProducts = getFilteredProducts();
+            filteredProducts = getSortedProducts(filteredProducts);
+            
+            const startIndex = (currentPage - 1) * 12;
+            const endIndex = startIndex + 12;
+            const pageProducts = filteredProducts.slice(startIndex, endIndex);
+            
+            pageProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                grid.appendChild(productCard);
+            });
+            
+            updatePagination(filteredProducts.length);
+            updateWishlistButtons();
+        }
+
+        function getFilteredProducts() {
+            if (currentFilter === 'all') {
+                return allProducts;
+            }
+            return allProducts.filter(product => 
+                product.badge.toLowerCase().includes(currentFilter.toLowerCase())
+            );
+        }
+
+        function getSortedProducts(products) {
+            switch (currentSort) {
+                case 'price-low':
+                    return products.sort((a, b) => a.price - b.price);
+                case 'price-high':
+                    return products.sort((a, b) => b.price - a.price);
+                case 'name':
+                    return products.sort((a, b) => a.name.localeCompare(b.name));
+                default:
+                    return products;
+            }
+        }
+
+        function filterProducts(filter) {
+            currentFilter = filter;
+            currentPage = 1;
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            loadCollections();
+        }
+
+        function sortProducts(sortType) {
+            currentSort = sortType;
+            currentPage = 1;
+            loadCollections();
+        }
+
+        function createProductCard(product) {
+            const col = document.createElement('div');
+            col.className = 'col-md-4 col-lg-3 mb-4';
+            
+            col.innerHTML = `
+                <div class="product-card" onclick="showProductDetail('${product.id}')">
+                    <div class="card-img-container">
+                        <img src="${product.images.regular[0]}" class="card-img-top" alt="${product.name}" loading="lazy">
+                        <span class="card-badge">${product.badge}</span>
+                        <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist('${product.id}')" title="Add to Wishlist">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">${product.name}</h5>
+                        <div class="card-price">₹${product.price}</div>
+                        <div class="price-note">(taxes are included)</div>
+                        <p class="card-text">${product.description.substring(0, 80)}...</p>
+                        <div class="quantity-selector">
+                            <div class="w-100">
+                                <div class="quantity-label">QUANTITY</div>
+                                <div class="quantity-input-group">
+                                    <button type="button" class="quantity-btn" onclick="event.stopPropagation(); updateCardQuantity(this, -1)">-</button>
+                                    <input type="number" class="quantity-input" value="1" min="1" max="999" onchange="event.stopPropagation(); validateCardQuantity(this)">
+                                    <button type="button" class="quantity-btn" onclick="event.stopPropagation(); updateCardQuantity(this, 1)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCartFromCard(this, '${product.name}', ${product.price}, '${product.images.regular[0]}', 'M', 'Regular')">
+                                <i class="fas fa-cart-plus"></i> ADD TO CART
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return col;
+        }
+
+        function updateCardQuantity(button, change) {
+            const quantityInput = button.parentElement.querySelector('.quantity-input');
+            let currentQuantity = parseInt(quantityInput.value) || 1;
+            let newQuantity = currentQuantity + change;
+            
+            if (newQuantity < 1) {
+                newQuantity = 1;
+            }
+            
+            quantityInput.value = newQuantity;
+        }
+
+        function validateCardQuantity(input) {
+            let quantity = parseInt(input.value) || 1;
+            
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            
+            input.value = quantity;
+        }
+
+        function addToCartFromCard(button, productName, price, imageUrl, size, fit) {
+            const productCard = button.closest('.product-card');
+            const quantityInput = productCard.querySelector('.quantity-input');
+            const quantity = parseInt(quantityInput.value) || 1;
+            
+            addToCart(productName, price, imageUrl, size, fit, quantity);
+        }
+
+        function changePage(direction) {
+            const filteredProducts = getFilteredProducts();
+            const totalPages = Math.ceil(filteredProducts.length / 12);
+            currentPage += direction;
+            
+            if (currentPage < 1) currentPage = 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            
+            loadCollections();
+        }
+
+        function updatePagination(totalProducts) {
+            const totalPages = Math.ceil(totalProducts / 12);
+            document.getElementById('page-info').textContent = `PAGE ${currentPage} OF ${totalPages}`;
+            document.getElementById('prev-page').disabled = currentPage === 1;
+            document.getElementById('next-page').disabled = currentPage === totalPages;
+        }
+
+        // Enhanced Product Detail Functions
+        function showProductDetail(productId) {
+            currentProduct = allProducts.find(p => p.id === productId);
+            if (!currentProduct) return;
+            
+            // Load product information
+            document.getElementById('enhanced-product-title').textContent = currentProduct.name;
+            document.getElementById('enhanced-product-price').textContent = `₹${currentProduct.price}`;
+            document.getElementById('enhanced-product-description').textContent = currentProduct.description;
+            
+            // Reset selections
+            selectedFit = 'regular';
+            selectedSize = 'M';
+            selectedQuantity = 1;
+            
+            // Update quantity input
+            document.getElementById('enhanced-quantity-input').value = selectedQuantity;
+            
+            // Update fit selector
+            document.querySelectorAll('.enhanced-fit-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.fit === selectedFit) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Update size selector
+            document.querySelectorAll('.enhanced-size-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.size === selectedSize) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Load images
+            loadEnhancedProductImages();
+            
+            // Update wishlist button
+            updateProductDetailWishlistButton();
+            
+            showPage('product-detail');
+        }
+
+        function loadEnhancedProductImages() {
+            const images = currentProduct.images[selectedFit];
+            const mainImage = document.getElementById('enhanced-main-image');
+            const thumbnailGallery = document.getElementById('enhanced-thumbnails');
+            
+            // Load main image
+            mainImage.src = images[0];
+            mainImage.alt = currentProduct.name;
+            
+            // Load thumbnails
+            thumbnailGallery.innerHTML = '';
+            images.forEach((img, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = img;
+                thumbnail.alt = `${currentProduct.name} ${index + 1}`;
+                thumbnail.className = 'enhanced-thumbnail';
+                if (index === 0) thumbnail.classList.add('active');
+                thumbnail.onclick = () => selectEnhancedThumbnail(img, thumbnail);
+                thumbnailGallery.appendChild(thumbnail);
+            });
+        }
+
+        function selectEnhancedThumbnail(imgSrc, thumbnailElement) {
+            const mainImage = document.getElementById('enhanced-main-image');
+            mainImage.src = imgSrc;
+            document.querySelectorAll('.enhanced-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            thumbnailElement.classList.add('active');
+        }
+
+        // Enhanced fit and size selectors
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.enhanced-fit-btn')) {
+                const fitBtn = e.target.closest('.enhanced-fit-btn');
+                document.querySelectorAll('.enhanced-fit-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                fitBtn.classList.add('active');
+                selectedFit = fitBtn.dataset.fit;
+                if (currentProduct) {
+                    loadEnhancedProductImages();
+                }
+            }
+            
+            if (e.target.closest('.enhanced-size-btn')) {
+                const sizeBtn = e.target.closest('.enhanced-size-btn');
+                document.querySelectorAll('.enhanced-size-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                sizeBtn.classList.add('active');
+                selectedSize = sizeBtn.dataset.size;
+            }
+        });
+
+        function updateEnhancedQuantity(change) {
+            const quantityInput = document.getElementById('enhanced-quantity-input');
+            let currentQuantity = parseInt(quantityInput.value) || 1;
+            let newQuantity = currentQuantity + change;
+            
+            if (newQuantity < 1) {
+                newQuantity = 1;
+            }
+            
+            quantityInput.value = newQuantity;
+            selectedQuantity = newQuantity;
+        }
+
+        function validateEnhancedQuantity() {
+            const quantityInput = document.getElementById('enhanced-quantity-input');
+            let quantity = parseInt(quantityInput.value) || 1;
+            
+            if (quantity < 1) {
+                quantity = 1;
+            }
+            
+            quantityInput.value = quantity;
+            selectedQuantity = quantity;
+        }
+
+        function addProductToCart() {
+            if (!currentProduct) return;
+            
+            validateEnhancedQuantity();
+            
+            addToCart(
+                currentProduct.name,
+                currentProduct.price,
+                currentProduct.images[selectedFit][0],
+                selectedSize,
+                selectedFit.charAt(0).toUpperCase() + selectedFit.slice(1),
+                selectedQuantity
+            );
+        }
+
+        function toggleWishlistDetail() {
+            if (!currentProduct) return;
+            toggleWishlist(currentProduct.id);
+            updateProductDetailWishlistButton();
+        }
+
+        function updateProductDetailWishlistButton() {
+            if (!currentProduct) return;
+            
+            const wishlistBtn = document.getElementById('product-detail-wishlist-btn');
+            if (wishlistBtn) {
+                const isInWishlist = wishlist.some(item => item.id === currentProduct.id);
+                wishlistBtn.classList.toggle('active', isInWishlist);
+            }
         }
 
         // Improved Checkout Functions
         function proceedToCheckout() {
-            // Show checkout modal
+            if (cart.length === 0) {
+                showNotification('YOUR CART IS EMPTY!', 'warning');
+                return;
+            }
+            
+            populateCheckoutModal();
+            
             const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
             checkoutModal.show();
+        }
+
+        function populateCheckoutModal() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            // Reset form
-            document.getElementById('checkoutForm').reset();
-            document.querySelectorAll('.form-control').forEach(input => {
-                input.classList.remove('is-invalid');
+            const checkoutItemsContainer = document.getElementById('checkout-items');
+            const checkoutSubtotalElement = document.getElementById('checkout-subtotal');
+            const checkoutTotalElement = document.getElementById('checkout-total');
+            
+            let itemsHTML = '';
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                itemsHTML += `
+                    <div class="summary-item">
+                        <span><strong>${item.name}</strong> (${item.size}, ${item.fit}) × ${item.quantity}</span>
+                        <span><strong>₹${itemTotal}</strong></span>
+                    </div>
+                `;
             });
+            
+            checkoutItemsContainer.innerHTML = itemsHTML;
+            checkoutSubtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+            checkoutTotalElement.innerHTML = `<strong>₹${subtotal.toFixed(2)}</strong>`;
         }
 
         function validateCheckoutForm() {
@@ -1595,37 +5035,28 @@ Contact: varka.clothing@gmail.com | +91 9945268777
             
             let isValid = true;
             
-            // Reset all validation states
             form.querySelectorAll('.form-control').forEach(input => {
                 input.classList.remove('is-invalid');
             });
             
-            // Validate name
             if (!customerName.value.trim()) {
                 customerName.classList.add('is-invalid');
                 isValid = false;
             }
             
-            // Validate phone
-            const phonePattern = /^[0-9]{10}$/;
-            if (!customerPhone.value.trim() || !phonePattern.test(customerPhone.value.trim())) {
+            if (!customerPhone.value.trim() || !/^[0-9]{10}$/.test(customerPhone.value.trim())) {
                 customerPhone.classList.add('is-invalid');
                 isValid = false;
             }
             
-            // Validate address
             if (!customerAddress.value.trim()) {
                 customerAddress.classList.add('is-invalid');
                 isValid = false;
             }
             
-            // Validate email if provided
-            if (customerEmail.value.trim()) {
-                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailPattern.test(customerEmail.value.trim())) {
-                    customerEmail.classList.add('is-invalid');
-                    isValid = false;
-                }
+            if (customerEmail.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.value.trim())) {
+                customerEmail.classList.add('is-invalid');
+                isValid = false;
             }
             
             return isValid;
@@ -1641,41 +5072,31 @@ Contact: varka.clothing@gmail.com | +91 9945268777
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="loading-spinner"></span> PROCESSING ORDER...';
             
-            // Simulate order processing
-            setTimeout(() => {
-                const customerData = {
-                    name: document.getElementById('customerName').value.trim(),
-                    phone: document.getElementById('customerPhone').value.trim(),
-                    email: document.getElementById('customerEmail').value.trim(),
-                    address: document.getElementById('customerAddress').value.trim()
-                };
-                const orderNotes = document.getElementById('orderNotes').value.trim();
-                
-                // Create demo order
-                const order = {
-                    id: 'VRK-' + Math.floor(1000 + Math.random() * 9000),
-                    date: new Date().toISOString(),
-                    total: 3147.00,
-                    items: [
-                        { name: 'DEATH T-Shirt', size: 'M', fit: 'Regular', quantity: 2, price: 999 },
-                        { name: 'HERMES T-Shirt', size: 'L', fit: 'Oversized', quantity: 1, price: 1149 }
-                    ]
-                };
-                
-                // Close checkout modal
-                const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
-                checkoutModal.hide();
-                
-                // Show contact choice modal
-                showContactChoiceModal(order, customerData, orderNotes);
-                
-                // Reset button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>SUBMIT ORDER';
-                
-                // Reset form
-                document.getElementById('checkoutForm').reset();
-            }, 2000);
+            const customerData = {
+                name: document.getElementById('customerName').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim(),
+                email: document.getElementById('customerEmail').value.trim(),
+                address: document.getElementById('customerAddress').value.trim()
+            };
+            const orderNotes = document.getElementById('orderNotes').value.trim();
+            
+            const order = await createOrder(customerData, [...cart], orderNotes);
+            
+            const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+            checkoutModal.hide();
+            
+            // Show contact choice modal
+            showContactChoiceModal(order, customerData, orderNotes);
+            
+            cart = [];
+            saveCart();
+            updateCartDisplay();
+            
+            document.getElementById('checkoutForm').reset();
+            
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>SUBMIT ORDER';
         }
 
         function showContactChoiceModal(order, customerData, orderNotes) {
@@ -1920,21 +5341,54 @@ Contact: varka.clothing@gmail.com | +91 9945268777
 
         // Page Management
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+            showLoadingOverlay();
             
-            document.getElementById(`${pageId}-page`).classList.add('active');
-            
-            // Update navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.onclick && link.onclick.toString().includes(pageId)) {
-                    link.classList.add('active');
+            // Don't update nav for product detail page
+            if (pageId !== 'product-detail') {
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.onclick && link.onclick.toString().includes(pageId)) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                document.getElementById(`${pageId}-page`).classList.add('active');
+                
+                if (pageId === 'collections') {
+                    loadCollections();
+                } else if (pageId === 'wishlist') {
+                    updateWishlistContent();
+                } else if (pageId === 'dashboard') {
+                    updateDashboardStats();
+                    updateOrdersDisplay();
                 }
+                
+                window.scrollTo(0, 0);
+                hideLoadingOverlay();
+            }, 300);
+        }
+
+        function showLoadingOverlay() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.add('active');
+        }
+
+        function hideLoadingOverlay() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.remove('active');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-            
-            window.scrollTo(0, 0);
         }
 
         // Enhanced Notification System
@@ -1983,19 +5437,47 @@ Contact: varka.clothing@gmail.com | +91 9945268777
             }, 4000);
         }
 
+        // Scroll Handler
+        function handleScroll() {
+            const backToTop = document.querySelector('.back-to-top');
+            const navbar = document.querySelector('.navbar');
+            
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+
         // Initialize on DOM load
         document.addEventListener('DOMContentLoaded', function() {
             checkLoginState();
         });
 
-        console.log('VARKA BUSINESS MANAGEMENT SYSTEM - IMPROVED CHECKOUT! 🎉💼📧📱');
-        console.log('Login: varkaclothing / varka_2025');
-        console.log('✅ Enhanced mobile responsiveness');
+        // Save data before unload
+        window.addEventListener('beforeunload', function() {
+            saveCart();
+            saveWishlist();
+            saveBusinessData();
+        });
+
+        console.log('🎉 VARKA COMPLETE BUSINESS MANAGEMENT SYSTEM LOADED! 💼📧📱');
+        console.log('✅ Login: varkaclothing / varka_2025');
+        console.log('✅ Features: Dashboard, Collections, Cart, Wishlist, Checkout');
+        console.log('✅ Enhanced mobile responsiveness & universal browser support');
         console.log('✅ Improved email compatibility for Chrome & Safari');
-        console.log('✅ Better form validation and UX');
-        console.log('✅ Responsive modal design');
-        console.log('✅ Cross-browser email support with fallbacks');
-        console.log('Complete checkout solution optimized for all devices!');
+        console.log('✅ Complete business management with order tracking');
+        console.log('✅ Cross-platform email & WhatsApp integration');
+        console.log('✅ Print functionality and data export capabilities');
+        console.log('Complete solution ready for production use!');
     </script>
 </body>
 
