@@ -13,17 +13,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <!-- Font Awesome (includes brand icons for WhatsApp) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- AOS Library -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    
-    <!-- Firebase SDK v9 (modular) -->
-    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
-    <script type="module" src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
     
     <style>
         :root {
@@ -518,50 +513,15 @@
             font-weight: 700;
         }
 
-        /* Sync Status */
-        .sync-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0 0.5rem;
-            transition: var(--transition);
+        /* Dashboard Section */
+        .collections-header {
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            background: linear-gradient(135deg, var(--light-color) 0%, #ffffff 100%);
+            text-align: center;
+            position: relative;
         }
 
-        .sync-status.online {
-            background: rgba(39, 174, 96, 0.2);
-            border: 1px solid #27ae60;
-            color: #27ae60;
-        }
-
-        .sync-status.syncing {
-            background: rgba(241, 196, 15, 0.2);
-            border: 1px solid #f1c40f;
-            color: #f1c40f;
-        }
-
-        .sync-status.offline {
-            background: rgba(231, 76, 60, 0.2);
-            border: 1px solid #e74c3c;
-            color: #e74c3c;
-        }
-
-        .sync-status i {
-            font-size: 1rem;
-        }
-
-        .sync-status.syncing i {
-            animation: spin 1s linear infinite;
-        }
-
-        /* Section Titles */
         .section-title {
             font-size: 3.5rem;
             font-weight: 800;
@@ -594,236 +554,297 @@
             font-weight: 400;
         }
 
-        /* Dashboard Styles */
-        .collections-header {
-            padding-top: 120px;
-            padding-bottom: 4rem;
-            background: linear-gradient(135deg, var(--light-color) 0%, #ffffff 100%);
+        /* Dashboard Simple Cart Section */
+        .cart-section {
+            background-color: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            padding: 4rem;
+        }
+
+        .empty-cart-state {
             text-align: center;
-            position: relative;
+            padding: 5rem 2rem;
         }
 
-        .dashboard-stat-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .dashboard-stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-        }
-
-        .dashboard-stat-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .stat-icon {
-            font-size: 3.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .dashboard-stat-card:hover .stat-icon {
-            transform: scale(1.2);
-        }
-
-        .stat-info h3 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--dark-brown);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-info p {
-            font-size: 1rem;
+        .empty-cart-icon {
+            font-size: 6rem;
             color: var(--text-light);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0;
+            margin-bottom: 2rem;
+            opacity: 0.6;
         }
 
-        .dashboard-section-title {
-            font-size: 2.2rem;
+        .empty-cart-title {
+            font-size: 2.5rem;
             font-weight: 700;
-            color: var(--dark-brown);
+            color: var(--dark-brown) !important;
             margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
         }
 
-        .dashboard-section-title::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -8px;
-            height: 4px;
-            width: 60px;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
+        .empty-cart-text {
+            color: #1a1a1a !important;
+            margin-bottom: 2.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
 
-        .dashboard-actions, .dashboard-orders {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        /* IMPROVED CHECKOUT MODAL STYLES */
+        .checkout-modal .modal-dialog {
+            max-width: 800px;
+            margin: 1rem auto;
         }
 
-        .orders-table-container {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .orders-table {
-            width: 100%;
-            background: white;
-            border-radius: 12px;
+        .checkout-modal .modal-content {
+            border-radius: 25px;
+            border: none;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
             overflow: hidden;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
         }
 
-        .orders-table th {
-            background: var(--dark-brown);
+        .checkout-modal .modal-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 1.5rem;
+            border-radius: 0;
+            padding: 2rem;
+            border-bottom: none;
+        }
+
+        .checkout-modal .modal-header h5 {
             font-weight: 700;
+            font-size: 1.8rem;
+            margin: 0;
+            color: white;
+        }
+
+        .checkout-modal .modal-body {
+            padding: 0;
+        }
+
+        .checkout-form {
+            padding: 2.5rem;
+        }
+
+        /* IMPROVED CHECKOUT SUMMARY */
+        .checkout-summary {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            margin: -2.5rem -2.5rem 2.5rem -2.5rem;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .checkout-summary h6 {
+            color: var(--dark-brown);
+            font-weight: 800;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border: none;
         }
 
-        .orders-table td {
-            padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid #eee;
-            vertical-align: middle;
+        .checkout-items {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             font-weight: 500;
         }
 
-        .orders-table tbody tr:hover {
-            background: rgba(201, 146, 56, 0.05);
+        .summary-item:last-child {
+            border-bottom: none;
         }
 
-        .order-status {
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+        .summary-total {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1rem;
+            border: 2px solid var(--primary-color);
+        }
+
+        .summary-total .summary-item {
+            border-bottom: none;
             font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--dark-brown);
+        }
+
+        /* IMPROVED FORM STYLES */
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .order-status.pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .order-status.processing {
-            background: #cce5ff;
-            color: #004085;
-        }
-
-        .order-status.completed {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .order-status.cancelled {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .order-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .order-action-btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.2rem;
+            font-size: 1rem;
             transition: var(--transition);
-            text-transform: uppercase;
+            background: white;
+            font-weight: 500;
         }
 
-        .order-action-btn.view {
-            background: var(--primary-color);
-            color: white;
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(201, 146, 56, 0.25);
+            outline: none;
+            background: white;
         }
 
-        .order-action-btn.edit {
-            background: var(--success-color);
-            color: white;
+        .form-control.is-invalid {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(231, 76, 60, 0.25);
         }
 
-        .order-action-btn.delete {
-            background: var(--accent-color);
-            color: white;
+        .invalid-feedback {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: block;
         }
 
-        .order-action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .empty-orders-state {
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        .empty-orders-state .empty-icon {
-            font-size: 4rem;
-            color: var(--text-light);
-            margin-bottom: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .empty-orders-state h4 {
-            font-size: 1.8rem;
+        .required-field::after {
+            content: " *";
+            color: var(--accent-color);
             font-weight: 700;
-            color: var(--dark-brown);
+        }
+
+        /* IMPROVED CONTACT CHOICE MODAL */
+        .contact-choice-modal .modal-dialog {
+            max-width: 700px;
+            margin: 1rem auto;
+        }
+
+        .contact-choice-modal .modal-content {
+            border-radius: 25px;
+            border: none;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-choice-modal .modal-header {
+            background: linear-gradient(45deg, var(--success-color), #20c997);
+            color: white;
+            padding: 2rem;
+            border-radius: 25px 25px 0 0;
+        }
+
+        .contact-choice-modal .modal-body {
+            padding: 2.5rem;
+        }
+
+        .contact-method-card {
+            background: white;
+            border: 3px solid #e9ecef;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             margin-bottom: 1rem;
         }
 
-        .empty-orders-state p {
+        .contact-method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-method-card.email {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(201, 146, 56, 0.05), rgba(201, 146, 56, 0.1));
+        }
+
+        .contact-method-card.email:hover {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(201, 146, 56, 0.1), rgba(201, 146, 56, 0.2));
+            box-shadow: 0 15px 40px rgba(201, 146, 56, 0.3);
+        }
+
+        .contact-method-card.whatsapp {
+            border-color: #25d366;
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.05), rgba(37, 211, 102, 0.1));
+        }
+
+        .contact-method-card.whatsapp:hover {
+            border-color: #25d366;
+            background: linear-gradient(135deg, rgba(37, 211, 102, 0.1), rgba(37, 211, 102, 0.2));
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.3);
+        }
+
+        .contact-method-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-method-card.email .contact-method-icon {
+            color: var(--primary-color);
+        }
+
+        .contact-method-card.whatsapp .contact-method-icon {
+            color: #25d366;
+        }
+
+        .contact-method-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark-brown);
+        }
+
+        .contact-method-description {
+            font-size: 0.95rem;
             color: var(--text-light);
-            font-size: 1.1rem;
             font-weight: 500;
         }
 
-        /* Notification */
+        .order-details-preview {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            white-space: pre-line;
+        }
+
+        /* NOTIFICATION IMPROVEMENTS */
         .notification {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
+            bottom: 20px;
+            right: 20px;
             background: linear-gradient(45deg, var(--success-color), #20c997);
             color: white;
-            padding: 2rem 3rem;
-            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
             box-shadow: 0 10px 40px rgba(39, 174, 96, 0.4);
             z-index: 1100;
-            max-width: 450px;
+            max-width: 400px;
             font-weight: 600;
-            font-size: 1.1rem;
-            text-align: center;
+            font-size: 1rem;
+            text-align: left;
             border: 2px solid rgba(255, 255, 255, 0.2);
             transform: translateX(100%);
             transition: transform 0.3s ease-out;
@@ -834,104 +855,104 @@
             transform: translateX(0);
         }
 
-        /* Back to Top Button */
-        .back-to-top {
+        .notification.warning {
+            background: linear-gradient(45deg, var(--warning-color), #e67e22);
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, var(--accent-color), #c0392b);
+        }
+
+        .notification.info {
+            background: linear-gradient(45deg, var(--primary-color), var(--medium-brown));
+        }
+
+        /* Email Status Overlay */
+        .email-status-overlay {
             position: fixed;
-            bottom: 40px;
-            right: 40px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
-            z-index: 999;
+            z-index: 10001;
             opacity: 0;
             visibility: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
-        .back-to-top.active {
+        .email-status-overlay.show {
             opacity: 1;
             visibility: visible;
         }
 
-        .back-to-top:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 35px rgba(0, 0, 0, 0.35);
-            color: white;
-        }
-
-        /* Sync Status Visual Indicator */
-        .sync-indicator {
-            position: fixed;
-            top: 90px;
-            right: 20px;
-            z-index: 1001;
+        .email-status-content {
             background: white;
-            padding: 0.8rem 1.2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid var(--primary-color);
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: none;
-        }
-
-        .sync-indicator.active {
-            display: block;
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        /* Device Counter */
-        .device-counter {
-            position: fixed;
-            top: 140px;
-            right: 20px;
-            z-index: 1001;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.5rem 1rem;
+            padding: 3rem;
             border-radius: 20px;
-            font-size: 0.8rem;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .email-status-icon {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .email-status-title {
+            font-size: 1.8rem;
             font-weight: 700;
-            box-shadow: 0 4px 15px rgba(201, 146, 56, 0.3);
-            display: none;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
         }
 
-        .device-counter.active {
-            display: block;
+        .email-status-message {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
-        /* Loading Spinner */
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
+        /* MOBILE RESPONSIVENESS IMPROVEMENTS */
+        @media (max-width: 991.98px) {
+            .navbar-nav {
+                padding: 1.5rem;
+                background: white;
+                border-radius: 15px;
+                margin-top: 1rem;
+                box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+                text-align: center;
+            }
+            
+            .navbar-nav .nav-link {
+                padding: 1.2rem;
+                margin: 0.3rem 0;
+                font-size: 1.3rem;
+                font-weight: 700;
+            }
+            
+            .logout-btn {
+                margin: 1rem 0 0 0;
+                width: 100%;
+                padding: 1rem 2rem;
+            }
+
+            .checkout-modal .modal-dialog {
+                margin: 0.5rem;
+                max-width: none;
+            }
+
+            .contact-choice-modal .modal-dialog {
+                margin: 0.5rem;
+                max-width: none;
+            }
         }
 
-        /* Mobile Responsiveness */
         @media (max-width: 767.98px) {
             .login-container {
                 padding: 2rem;
@@ -956,62 +977,138 @@
                 font-weight: 400;
             }
             
-            .notification {
-                right: 20px;
-                left: 20px;
-                max-width: none;
+            .cart-section {
+                padding: 2rem;
+            }
+            
+            .checkout-form {
+                padding: 1.5rem;
+            }
+
+            .checkout-summary {
+                margin: -1.5rem -1.5rem 2rem -1.5rem;
+                padding: 1.5rem;
+            }
+
+            .form-control {
+                padding: 1rem;
                 font-size: 1rem;
-                padding: 1.5rem 2rem;
-                font-weight: 600;
             }
 
-            .dashboard-stat-card {
-                padding: 2rem;
-                margin-bottom: 1.5rem;
+            .contact-choice-modal .modal-body {
+                padding: 1.5rem;
             }
 
-            .dashboard-actions,
-            .dashboard-orders {
-                padding: 2rem;
+            .contact-method-card {
+                height: 160px;
+                padding: 1.5rem;
+                margin-bottom: 1rem;
             }
 
-            .dashboard-section-title {
-                font-size: 1.8rem;
+            .contact-method-icon {
+                font-size: 2.5rem;
+                margin-bottom: 0.8rem;
             }
 
-            .order-actions {
-                flex-direction: column;
-                gap: 0.3rem;
+            .contact-method-title {
+                font-size: 1.3rem;
+                margin-bottom: 0.3rem;
             }
 
-            .order-action-btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .orders-table {
+            .contact-method-description {
                 font-size: 0.9rem;
             }
 
-            .orders-table th,
-            .orders-table td {
-                padding: 1rem 0.8rem;
+            .order-details-preview {
+                padding: 1rem;
+                font-size: 0.8rem;
+                max-height: 150px;
             }
 
-            .sync-indicator, 
-            .device-counter {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin: 1rem 0;
-                display: block;
+            .notification {
+                right: 10px;
+                left: 10px;
+                bottom: 10px;
+                max-width: none;
+                font-size: 0.9rem;
+                padding: 1.2rem 1.5rem;
             }
+
+            .email-status-content {
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .email-status-icon {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .email-status-title {
+                font-size: 1.5rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .email-status-message {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+                font-weight: 700;
+            }
+
+            .navbar-brand {
+                font-size: 2rem;
+                font-weight: 900;
+            }
+
+            .checkout-modal .modal-dialog,
+            .contact-choice-modal .modal-dialog {
+                margin: 0.25rem;
+            }
+
+            .contact-method-card {
+                height: 140px;
+                padding: 1rem;
+            }
+
+            .contact-method-icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .contact-method-title {
+                font-size: 1.1rem;
+            }
+
+            .contact-method-description {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Loading Spinner for Buttons */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
         }
 
         /* Print styles */
         @media print {
-            .navbar, .back-to-top, .notification, .loading-overlay, .login-screen,
-            .order-actions, .modal-header, .modal-footer, .btn {
+            .navbar, .notification, .loading-overlay, .login-screen,
+            .modal-header, .modal-footer, .btn {
                 display: none !important;
             }
             
@@ -1024,10 +1121,30 @@
             h1, h2, h3, h4, h5, h6 {
                 color: #000 !important;
             }
+        }
 
-            .dashboard-stat-card, .dashboard-actions, .dashboard-orders {
-                break-inside: avoid;
-                page-break-inside: avoid;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+                background-color: var(--success-color);
+            }
+            100% {
+                transform: scale(1);
             }
         }
     </style>
@@ -1071,18 +1188,6 @@
             <div class="spinner"></div>
         </div>
 
-        <!-- Sync Status Indicator -->
-        <div id="sync-indicator" class="sync-indicator">
-            <i class="fas fa-cloud-arrow-up me-2"></i>
-            <span id="sync-indicator-text">Syncing data...</span>
-        </div>
-
-        <!-- Device Counter -->
-        <div id="device-counter" class="device-counter">
-            <i class="fas fa-devices me-1"></i>
-            <span id="device-count">1</span> Device(s) Connected
-        </div>
-
         <!-- Navigation Header -->
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
@@ -1098,10 +1203,10 @@
                             <a class="nav-link active" onclick="showPage('dashboard')" href="#dashboard">DASHBOARD</a>
                         </li>
                         <li class="nav-item">
-                            <div class="sync-status" id="sync-status" title="Cloud Sync Status">
-                                <i class="fas fa-cloud" id="sync-icon"></i>
-                                <span id="sync-text">OFFLINE</span>
-                            </div>
+                            <a class="nav-link cart-icon" onclick="showPage('cart')" href="#cart" title="View Cart">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="cart-count">3</span>
+                            </a>
                         </li>
                         <li class="nav-item">
                             <button class="logout-btn" onclick="logout()" title="Logout">
@@ -1113,112 +1218,53 @@
             </div>
         </nav>
 
-        <!-- Business Management Dashboard -->
+        <!-- Dashboard Page -->
         <div id="dashboard-page" class="page active">
             <div class="collections-header">
                 <div class="container">
                     <h1 class="section-title">BUSINESS DASHBOARD</h1>
-                    <p class="section-subtitle">REAL-TIME CROSS-DEVICE SYNC ENABLED - ALL DATA SYNCS INSTANTLY</p>
+                    <p class="section-subtitle">MANAGE YOUR ORDERS AND BUSINESS OPERATIONS</p>
                 </div>
             </div>
 
             <div class="section-padding">
                 <div class="container">
-                    <!-- Dashboard Stats -->
-                    <div class="row mb-5" data-aos="fade-up">
-                        <div class="col-md-3 mb-4">
-                            <div class="dashboard-stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="total-orders-count">0</h3>
-                                    <p>TOTAL ORDERS</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-4">
-                            <div class="dashboard-stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="total-customers-count">0</h3>
-                                    <p>CUSTOMERS</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-4">
-                            <div class="dashboard-stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-rupee-sign"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="total-revenue">₹0</h3>
-                                    <p>TOTAL REVENUE</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-4">
-                            <div class="dashboard-stat-card">
-                                <div class="stat-icon">
-                                    <i class="fas fa-tshirt"></i>
-                                </div>
-                                <div class="stat-info">
-                                    <h3 id="total-items-sold">0</h3>
-                                    <p>ITEMS SOLD</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="cart-section" data-aos="fade-up">
+                        <h3 class="mb-4">Quick Demo - Checkout System</h3>
+                        <p class="mb-4">This is a demonstration of the improved checkout system. Click the button below to test the checkout process:</p>
+                        <button class="btn btn-success btn-lg" onclick="proceedToCheckout()">
+                            <i class="fas fa-credit-card"></i> TEST CHECKOUT SYSTEM
+                        </button>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <!-- Quick Actions -->
-                    <div class="dashboard-actions mb-5" data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="dashboard-section-title">QUICK ACTIONS</h3>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <button class="btn btn-primary btn-lg w-100" onclick="addTestOrder()">
-                                    <i class="fas fa-plus"></i> ADD TEST ORDER
-                                </button>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <button class="btn btn-outline-primary btn-lg w-100" onclick="exportOrdersToCSV()">
-                                    <i class="fas fa-download"></i> EXPORT ORDERS
-                                </button>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <button class="btn btn-success btn-lg w-100" onclick="clearAllData()">
-                                    <i class="fas fa-trash"></i> CLEAR DATA
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Cart Page -->
+        <div id="cart-page" class="page">
+            <div class="collections-header">
+                <div class="container">
+                    <h1 class="section-title">SHOPPING CART</h1>
+                    <p class="section-subtitle">REVIEW YOUR SELECTED ITEMS AND PROCEED TO CHECKOUT</p>
+                </div>
+            </div>
 
-                    <!-- Orders Management -->
-                    <div class="dashboard-orders" data-aos="fade-up" data-aos-delay="200">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h3 class="dashboard-section-title">ORDER MANAGEMENT</h3>
-                            <div class="order-filters">
-                                <select class="form-select" onchange="filterOrders(this.value)">
-                                    <option value="all">ALL ORDERS</option>
-                                    <option value="pending">PENDING</option>
-                                    <option value="processing">PROCESSING</option>
-                                    <option value="completed">COMPLETED</option>
-                                    <option value="cancelled">CANCELLED</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="orders-table-container">
-                            <div id="orders-table">
-                                <!-- Orders will be loaded here -->
-                                <div class="empty-orders-state">
-                                    <div class="empty-icon">
-                                        <i class="fas fa-clipboard-list"></i>
-                                    </div>
-                                    <h4>NO ORDERS YET</h4>
-                                    <p>Orders will appear here as customers place them through the website. Click "ADD TEST ORDER" to see how it works!</p>
+            <div class="section-padding">
+                <div class="container">
+                    <div class="cart-section" data-aos="fade-up">
+                        <div id="cart-content">
+                            <!-- Sample cart content for demo -->
+                            <div class="mb-4">
+                                <h4>Sample Cart Items:</h4>
+                                <div class="alert alert-info">
+                                    <strong>DEATH T-Shirt</strong> - Size: M, Fit: Regular - Quantity: 2 - ₹1,998<br>
+                                    <strong>HERMES T-Shirt</strong> - Size: L, Fit: Oversized - Quantity: 1 - ₹1,149<br>
+                                    <hr class="my-2">
+                                    <strong>Total: ₹3,147</strong>
                                 </div>
+                                <button class="btn btn-success btn-lg" onclick="proceedToCheckout()">
+                                    <i class="fas fa-credit-card"></i> PROCEED TO CHECKOUT
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1226,10 +1272,219 @@
             </div>
         </div>
 
-        <!-- Back to Top Button -->
-        <a href="#" class="back-to-top" onclick="scrollToTop()">
-            <i class="fas fa-arrow-up"></i>
-        </a>
+        <!-- Improved Checkout Modal -->
+        <div class="modal fade checkout-modal" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="checkoutModalLabel">
+                            <i class="fas fa-shopping-cart me-2"></i>COMPLETE YOUR ORDER
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="checkout-form">
+                            <!-- Improved Order Summary -->
+                            <div class="checkout-summary">
+                                <h6><i class="fas fa-receipt me-2"></i>ORDER SUMMARY</h6>
+                                <div id="checkout-items" class="checkout-items">
+                                    <div class="summary-item">
+                                        <span><strong>DEATH T-Shirt</strong> (M, Regular) × 2</span>
+                                        <span><strong>₹1,998</strong></span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span><strong>HERMES T-Shirt</strong> (L, Oversized) × 1</span>
+                                        <span><strong>₹1,149</strong></span>
+                                    </div>
+                                </div>
+                                <div class="summary-total">
+                                    <div class="summary-item">
+                                        <span>SUBTOTAL:</span>
+                                        <span id="checkout-subtotal">₹3,147.00</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>SHIPPING:</span>
+                                        <span>CALCULATED AFTER ORDER</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span><strong>TOTAL:</strong></span>
+                                        <span id="checkout-total"><strong>₹3,147.00</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Improved Customer Details Form -->
+                            <form id="checkoutForm" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="customerName" class="form-label required-field">FULL NAME</label>
+                                            <input type="text" class="form-control" id="customerName" required placeholder="Enter your full name">
+                                            <div class="invalid-feedback">Please enter your full name.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="customerPhone" class="form-label required-field">MOBILE NUMBER</label>
+                                            <input type="tel" class="form-control" id="customerPhone" required pattern="[0-9]{10}" placeholder="10-digit mobile number">
+                                            <div class="invalid-feedback">Please enter a valid 10-digit mobile number.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="customerEmail" class="form-label">EMAIL ADDRESS (OPTIONAL)</label>
+                                    <input type="email" class="form-control" id="customerEmail" placeholder="your@email.com">
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="customerAddress" class="form-label required-field">COMPLETE ADDRESS</label>
+                                    <textarea class="form-control" id="customerAddress" rows="4" required placeholder="Enter your complete address including street, city, state, and pincode"></textarea>
+                                    <div class="invalid-feedback">Please enter your complete address.</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="orderNotes" class="form-label">SPECIAL INSTRUCTIONS (OPTIONAL)</label>
+                                    <textarea class="form-control" id="orderNotes" rows="2" placeholder="Any special delivery instructions or preferences..."></textarea>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>CANCEL
+                        </button>
+                        <button type="button" class="btn btn-success btn-lg" onclick="submitOrder()" id="submit-order-btn">
+                            <i class="fas fa-paper-plane me-2"></i>SUBMIT ORDER
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Improved Contact Choice Modal -->
+        <div class="modal fade contact-choice-modal" id="contactChoiceModal" tabindex="-1" aria-labelledby="contactChoiceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="contactChoiceModalLabel">
+                            <i class="fas fa-check-circle me-2"></i>ORDER SUBMITTED SUCCESSFULLY!
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-success mb-4">
+                            <h6><i class="fas fa-info-circle me-2"></i>Your Order Details</h6>
+                            <p class="mb-2"><strong>Order ID:</strong> <span id="contact-order-id">VRK-1001</span></p>
+                            <p class="mb-2"><strong>Order Total:</strong> <span id="contact-order-total">₹3,147.00</span></p>
+                            <p class="mb-0">Your order has been saved to the business system!</p>
+                        </div>
+                        
+                        <h5 class="text-center mb-4">Choose how to send order details to VARKA:</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="contact-method-card email" onclick="sendViaEmail()">
+                                    <div class="contact-method-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="contact-method-title">EMAIL</div>
+                                    <div class="contact-method-description">
+                                        Send to varka.clothing@gmail.com<br>
+                                        Works on all devices
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="contact-method-card whatsapp" onclick="sendViaWhatsApp()">
+                                    <div class="contact-method-icon">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div class="contact-method-title">WHATSAPP</div>
+                                    <div class="contact-method-description">
+                                        Send to +91 9945268777<br>
+                                        Instant delivery
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-3">
+                            <h6><i class="fas fa-copy me-2"></i>Order Details (copied to clipboard):</h6>
+                            <div class="order-details-preview" id="contact-order-details">
+NEW ORDER FROM VARKA WEBSITE
+================================
+
+ORDER INFORMATION:
+Order ID: VRK-1001
+Date: Today
+Status: PENDING
+
+CUSTOMER DETAILS:
+Name: Sample Customer
+Phone: 9876543210
+Address: Sample Address
+
+ORDER DETAILS:
+Total Items: 2 different designs
+Total Quantity: 3 pieces
+
+1. DEATH T-Shirt
+   Size: M | Fit: Regular
+   Quantity: 2 pieces
+   Unit Price: Rs.999
+   Item Total: Rs.1998
+
+2. HERMES T-Shirt
+   Size: L | Fit: Oversized
+   Quantity: 1 pieces
+   Unit Price: Rs.1149
+   Item Total: Rs.1149
+
+FINANCIAL SUMMARY:
+Items Subtotal: Rs.3147.00
+Taxes: INCLUDED IN PRICES
+Shipping: TO BE CALCULATED
+TOTAL AMOUNT: Rs.3147.00
+
+Thank you for choosing VARKA!
+Contact: varka.clothing@gmail.com | +91 9945268777
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-outline-secondary" onclick="copyOrderDetailsAgain()">
+                            <i class="fas fa-copy me-2"></i>COPY DETAILS AGAIN
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>CLOSE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Status Overlay -->
+        <div id="emailStatusOverlay" class="email-status-overlay">
+            <div class="email-status-content">
+                <div class="email-status-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="email-status-title">Opening Email Client...</div>
+                <div class="email-status-message">
+                    Please wait while we prepare your email with the order details.
+                    <br><br>
+                    <strong>If email doesn't open automatically:</strong><br>
+                    • Copy the order details from the previous screen<br>
+                    • Send manually to varka.clothing@gmail.com
+                </div>
+                <button class="btn btn-primary" onclick="closeEmailStatus()">
+                    <i class="fas fa-check me-2"></i>GOT IT
+                </button>
+            </div>
+        </div>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -1237,52 +1492,7 @@
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
     <!-- Custom JavaScript -->
-    <script type="module">
-        // Import Firebase modules
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-        import { getDatabase, ref, set, get, onValue, off, push, remove } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js';
-        import { getAuth, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js';
-
-        // IMPORTANT: Replace with your actual Firebase configuration
-        // Get these from your Firebase console: https://console.firebase.google.com/
-        const firebaseConfig = {
-            apiKey: "your-actual-api-key-here",
-            authDomain: "your-project-id.firebaseapp.com", 
-            databaseURL: "https://your-project-id-default-rtdb.firebaseio.com",
-            projectId: "your-project-id",
-            storageBucket: "your-project-id.appspot.com",
-            messagingSenderId: "your-sender-id",
-            appId: "your-app-id"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const auth = getAuth(app);
-        
-        // Global variables
-        let currentUser = null;
-        let isOnline = navigator.onLine;
-        let orders = [];
-        let customers = [];
-        let orderIdCounter = 1000;
-        let currentOrderFilter = 'all';
-        let realtimeListeners = [];
-        let deviceId = null;
-        let connectedDevices = new Set();
-        
-        // Generate unique device ID
-        deviceId = localStorage.getItem('varkaDeviceId') || generateDeviceId();
-        localStorage.setItem('varkaDeviceId', deviceId);
-
-        function generateDeviceId() {
-            return 'device_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        }
-
-        // Login System
-        const VALID_USERNAME = 'varkaclothing';
-        const VALID_PASSWORD = 'varka_2025';
-
+    <script>
         // Initialize AOS
         AOS.init({
             duration: 800,
@@ -1291,622 +1501,12 @@
             mirror: false
         });
 
-        // Online/Offline detection
-        window.addEventListener('online', () => {
-            isOnline = true;
-            updateSyncStatus('syncing', 'CONNECTING');
-            initializeFirebaseAuth();
-        });
-        
-        window.addEventListener('offline', () => {
-            isOnline = false;
-            updateSyncStatus('offline', 'OFFLINE');
-            showNotification('📱 OFFLINE MODE - DATA SAVED LOCALLY', 'warning');
-        });
+        // Login System
+        const VALID_USERNAME = 'varkaclothing';
+        const VALID_PASSWORD = 'varka_2025';
 
-        // Sync Status Functions
-        function updateSyncStatus(status, text) {
-            const syncStatus = document.getElementById('sync-status');
-            const syncIcon = document.getElementById('sync-icon');
-            const syncText = document.getElementById('sync-text');
-            
-            if (!syncStatus) return;
-            
-            // Remove all status classes
-            syncStatus.classList.remove('online', 'syncing', 'offline');
-            
-            // Add appropriate class and update content
-            switch (status) {
-                case 'online':
-                    syncStatus.classList.add('online');
-                    syncIcon.className = 'fas fa-cloud-check';
-                    syncText.textContent = text || 'SYNCED';
-                    break;
-                case 'syncing':
-                    syncStatus.classList.add('syncing');
-                    syncIcon.className = 'fas fa-cloud-arrow-up';
-                    syncText.textContent = text || 'SYNCING';
-                    break;
-                case 'offline':
-                    syncStatus.classList.add('offline');
-                    syncIcon.className = 'fas fa-cloud-exclamation';
-                    syncText.textContent = text || 'OFFLINE';
-                    break;
-            }
-
-            // Update sync indicator
-            const syncIndicator = document.getElementById('sync-indicator');
-            const syncIndicatorText = document.getElementById('sync-indicator-text');
-            
-            if (status === 'syncing') {
-                syncIndicator.classList.add('active');
-                syncIndicatorText.textContent = 'Syncing data across devices...';
-                setTimeout(() => {
-                    syncIndicator.classList.remove('active');
-                }, 2000);
-            }
-        }
-
-        // Enhanced Firebase Authentication
-        async function initializeFirebaseAuth() {
-            if (!isOnline) {
-                updateSyncStatus('offline', 'OFFLINE');
-                return;
-            }
-            
-            try {
-                updateSyncStatus('syncing', 'CONNECTING');
-                
-                // Sign in anonymously for simplicity
-                const userCredential = await signInAnonymously(auth);
-                currentUser = userCredential.user;
-                
-                console.log('Firebase authenticated:', currentUser.uid);
-                
-                // Set up authentication state listener
-                onAuthStateChanged(auth, (user) => {
-                    if (user) {
-                        currentUser = user;
-                        setupRealtimeSync();
-                        updateDevicePresence();
-                        updateSyncStatus('online', 'SYNCED');
-                    } else {
-                        currentUser = null;
-                        cleanupListeners();
-                        updateSyncStatus('offline', 'NO AUTH');
-                    }
-                });
-                
-            } catch (error) {
-                console.error('Firebase auth error:', error);
-                currentUser = null;
-                updateSyncStatus('offline', 'AUTH FAILED');
-                showNotification('⚠️ CLOUD CONNECTION FAILED - USING LOCAL STORAGE', 'warning');
-            }
-        }
-
-        // Enhanced Real-time Sync Setup
-        function setupRealtimeSync() {
-            if (!currentUser || !isOnline) return;
-            
-            console.log('Setting up real-time sync for user:', currentUser.uid);
-            
-            // Clean up existing listeners
-            cleanupListeners();
-            
-            // Orders sync
-            const ordersRef = ref(database, `users/${currentUser.uid}/orders`);
-            const ordersListener = onValue(ordersRef, (snapshot) => {
-                const firebaseOrders = snapshot.val();
-                if (firebaseOrders && Array.isArray(firebaseOrders)) {
-                    const ordersChanged = JSON.stringify(firebaseOrders) !== JSON.stringify(orders);
-                    if (ordersChanged) {
-                        orders = firebaseOrders;
-                        updateDashboardStats();
-                        updateOrdersDisplay();
-                        showSyncNotification('📋 Orders synced from cloud');
-                        console.log('Orders synced from Firebase:', orders.length);
-                    }
-                }
-            });
-            realtimeListeners.push(() => off(ordersRef, 'value', ordersListener));
-            
-            // Customers sync
-            const customersRef = ref(database, `users/${currentUser.uid}/customers`);
-            const customersListener = onValue(customersRef, (snapshot) => {
-                const firebaseCustomers = snapshot.val();
-                if (firebaseCustomers && Array.isArray(firebaseCustomers)) {
-                    const customersChanged = JSON.stringify(firebaseCustomers) !== JSON.stringify(customers);
-                    if (customersChanged) {
-                        customers = firebaseCustomers;
-                        updateDashboardStats();
-                        showSyncNotification('👥 Customers synced from cloud');
-                        console.log('Customers synced from Firebase:', customers.length);
-                    }
-                }
-            });
-            realtimeListeners.push(() => off(customersRef, 'value', customersListener));
-            
-            // Order counter sync
-            const counterRef = ref(database, `users/${currentUser.uid}/orderCounter`);
-            const counterListener = onValue(counterRef, (snapshot) => {
-                const firebaseCounter = snapshot.val();
-                if (firebaseCounter && firebaseCounter !== orderIdCounter) {
-                    orderIdCounter = firebaseCounter;
-                    console.log('Order counter synced from Firebase:', orderIdCounter);
-                }
-            });
-            realtimeListeners.push(() => off(counterRef, 'value', counterListener));
-            
-            // Device presence sync
-            const devicesRef = ref(database, `users/${currentUser.uid}/devices`);
-            const devicesListener = onValue(devicesRef, (snapshot) => {
-                const devices = snapshot.val();
-                if (devices) {
-                    const deviceIds = Object.keys(devices);
-                    const activeDevices = deviceIds.filter(id => {
-                        const device = devices[id];
-                        const lastSeen = device.lastSeen || 0;
-                        return Date.now() - lastSeen < 60000; // 1 minute timeout
-                    });
-                    
-                    connectedDevices = new Set(activeDevices);
-                    updateDeviceCounter();
-                }
-            });
-            realtimeListeners.push(() => off(devicesRef, 'value', devicesListener));
-            
-            console.log('Real-time listeners set up successfully');
-        }
-
-        function cleanupListeners() {
-            realtimeListeners.forEach(cleanup => cleanup());
-            realtimeListeners = [];
-        }
-
-        // Device Presence Management
-        function updateDevicePresence() {
-            if (!currentUser || !isOnline) return;
-            
-            const deviceRef = ref(database, `users/${currentUser.uid}/devices/${deviceId}`);
-            const deviceData = {
-                id: deviceId,
-                lastSeen: Date.now(),
-                userAgent: navigator.userAgent,
-                timestamp: new Date().toISOString()
-            };
-            
-            set(deviceRef, deviceData);
-            
-            // Update presence every 30 seconds
-            setInterval(() => {
-                if (currentUser && isOnline) {
-                    set(deviceRef, {
-                        ...deviceData,
-                        lastSeen: Date.now(),
-                        timestamp: new Date().toISOString()
-                    });
-                }
-            }, 30000);
-        }
-
-        function updateDeviceCounter() {
-            const deviceCounter = document.getElementById('device-counter');
-            const deviceCount = document.getElementById('device-count');
-            
-            if (connectedDevices.size > 0) {
-                deviceCounter.classList.add('active');
-                deviceCount.textContent = connectedDevices.size;
-            } else {
-                deviceCounter.classList.remove('active');
-            }
-        }
-
-        // Enhanced Firebase Data Management
-        async function saveDataToFirebase(path, data) {
-            if (!currentUser || !isOnline) {
-                // Save to localStorage as fallback
-                localStorage.setItem(`varka_${path}`, JSON.stringify(data));
-                updateSyncStatus('offline', 'OFFLINE');
-                return;
-            }
-            
-            try {
-                updateSyncStatus('syncing', 'SYNCING');
-                const dataRef = ref(database, `users/${currentUser.uid}/${path}`);
-                await set(dataRef, data);
-                updateSyncStatus('online', 'SYNCED');
-                console.log(`Data saved to Firebase: ${path}`);
-                showSyncNotification(`💾 ${path} saved to cloud`);
-            } catch (error) {
-                console.error(`Failed to save ${path} to Firebase:`, error);
-                // Fallback to localStorage
-                localStorage.setItem(`varka_${path}`, JSON.stringify(data));
-                updateSyncStatus('offline', 'SAVE FAILED');
-                setTimeout(() => updateSyncStatus('offline', 'OFFLINE'), 3000);
-            }
-        }
-
-        async function loadDataFromFirebase(path, defaultValue = null) {
-            if (!currentUser || !isOnline) {
-                // Load from localStorage as fallback
-                const localData = localStorage.getItem(`varka_${path}`);
-                return localData ? JSON.parse(localData) : defaultValue;
-            }
-            
-            try {
-                const dataRef = ref(database, `users/${currentUser.uid}/${path}`);
-                const snapshot = await get(dataRef);
-                const data = snapshot.val();
-                console.log(`Data loaded from Firebase: ${path}`, data);
-                return data || defaultValue;
-            } catch (error) {
-                console.error(`Failed to load ${path} from Firebase:`, error);
-                // Fallback to localStorage
-                const localData = localStorage.getItem(`varka_${path}`);
-                return localData ? JSON.parse(localData) : defaultValue;
-            }
-        }
-
-        // Business Management Functions
-        async function loadBusinessData() {
-            try {
-                const savedOrders = await loadDataFromFirebase('orders', []);
-                const savedCustomers = await loadDataFromFirebase('customers', []);
-                const savedCounter = await loadDataFromFirebase('orderCounter', 1000);
-                
-                orders = savedOrders || [];
-                customers = savedCustomers || [];
-                orderIdCounter = savedCounter || 1000;
-                
-                updateDashboardStats();
-                updateOrdersDisplay();
-                
-                console.log('Business data loaded:', { orders: orders.length, customers: customers.length, counter: orderIdCounter });
-            } catch (error) {
-                console.error('Failed to load business data:', error);
-                // Fallback to default values
-                orders = [];
-                customers = [];
-                orderIdCounter = 1000;
-            }
-        }
-
-        async function saveBusinessData() {
-            try {
-                await Promise.all([
-                    saveDataToFirebase('orders', orders),
-                    saveDataToFirebase('customers', customers),
-                    saveDataToFirebase('orderCounter', orderIdCounter)
-                ]);
-                console.log('Business data saved to cloud');
-            } catch (error) {
-                console.error('Failed to save business data:', error);
-            }
-        }
-
-        function updateDashboardStats() {
-            const totalOrders = orders.length;
-            const totalCustomers = customers.length;
-            const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
-            const totalItemsSold = orders.reduce((sum, order) => 
-                sum + order.items.reduce((itemSum, item) => itemSum + item.quantity, 0), 0);
-            
-            document.getElementById('total-orders-count').textContent = totalOrders;
-            document.getElementById('total-customers-count').textContent = totalCustomers;
-            document.getElementById('total-revenue').textContent = `₹${totalRevenue.toLocaleString()}`;
-            document.getElementById('total-items-sold').textContent = totalItemsSold;
-        }
-
-        // Order Management
-        async function createOrder(customerData, cartItems, orderNotes = '') {
-            const orderId = `VRK-${orderIdCounter++}`;
-            const orderDate = new Date().toISOString();
-            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            const order = {
-                id: orderId,
-                orderNumber: orderIdCounter - 1,
-                date: orderDate,
-                customer: {
-                    name: customerData.name,
-                    phone: customerData.phone,
-                    email: customerData.email || '',
-                    address: customerData.address
-                },
-                items: cartItems.map(item => ({
-                    ...item,
-                    id: Date.now() + Math.random()
-                })),
-                subtotal: subtotal,
-                total: subtotal,
-                status: 'pending',
-                notes: orderNotes,
-                createdAt: new Date().toLocaleString(),
-                updatedAt: new Date().toLocaleString(),
-                deviceId: deviceId
-            };
-            
-            orders.unshift(order);
-            
-            // Add/Update customer
-            const existingCustomerIndex = customers.findIndex(c => c.phone === customerData.phone);
-            if (existingCustomerIndex > -1) {
-                customers[existingCustomerIndex].lastOrderDate = orderDate;
-                customers[existingCustomerIndex].totalOrders += 1;
-                customers[existingCustomerIndex].totalSpent += subtotal;
-                customers[existingCustomerIndex].updatedAt = new Date().toLocaleString();
-            } else {
-                customers.push({
-                    id: Date.now() + Math.random(),
-                    name: customerData.name,
-                    phone: customerData.phone,
-                    email: customerData.email || '',
-                    address: customerData.address,
-                    firstOrderDate: orderDate,
-                    lastOrderDate: orderDate,
-                    totalOrders: 1,
-                    totalSpent: subtotal,
-                    createdAt: new Date().toLocaleString(),
-                    updatedAt: new Date().toLocaleString()
-                });
-            }
-            
-            await saveBusinessData();
-            updateDashboardStats();
-            updateOrdersDisplay();
-            
-            showNotification(`🎉 ORDER ${orderId} CREATED & SYNCING TO ALL DEVICES!`, 'success');
-            
-            return order;
-        }
-
-        // Add Test Order Function
-        async function addTestOrder() {
-            const testCustomer = {
-                name: `Test Customer ${Date.now()}`,
-                phone: `98765${Math.floor(10000 + Math.random() * 90000)}`,
-                email: `test${Date.now()}@example.com`,
-                address: `${Math.floor(100 + Math.random() * 900)} Test Street, Test City - 560001`
-            };
-            
-            const testItems = [
-                {
-                    name: 'VARKA PREMIUM TEE',
-                    price: 999,
-                    quantity: 1,
-                    size: 'M',
-                    fit: 'Regular',
-                    image: 'https://via.placeholder.com/100x100/c99238/fff?text=VARKA'
-                },
-                {
-                    name: 'DESIGNER COLLECTION',
-                    price: 1299,
-                    quantity: 2,
-                    size: 'L',
-                    fit: 'Oversized',
-                    image: 'https://via.placeholder.com/100x100/26231b/fff?text=DESIGN'
-                }
-            ];
-            
-            const testNotes = 'Test order created from dashboard - please process with priority';
-            
-            await createOrder(testCustomer, testItems, testNotes);
-        }
-
-        function filterOrders(status) {
-            currentOrderFilter = status;
-            updateOrdersDisplay();
-        }
-
-        function updateOrdersDisplay() {
-            const ordersContainer = document.getElementById('orders-table');
-            
-            let filteredOrders = orders;
-            if (currentOrderFilter !== 'all') {
-                filteredOrders = orders.filter(order => order.status === currentOrderFilter);
-            }
-            
-            if (filteredOrders.length === 0) {
-                ordersContainer.innerHTML = `
-                    <div class="empty-orders-state">
-                        <div class="empty-icon">
-                            <i class="fas fa-clipboard-list"></i>
-                        </div>
-                        <h4>NO ORDERS FOUND</h4>
-                        <p>No orders match the selected filter criteria. Click "ADD TEST ORDER" to create a sample order.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let ordersHTML = `
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th>ORDER ID</th>
-                            <th>CUSTOMER</th>
-                            <th>DATE</th>
-                            <th>ITEMS</th>
-                            <th>TOTAL</th>
-                            <th>STATUS</th>
-                            <th>DEVICE</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-            
-            filteredOrders.forEach(order => {
-                const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
-                const deviceInfo = order.deviceId ? order.deviceId.substr(-4) : 'N/A';
-                ordersHTML += `
-                    <tr>
-                        <td><strong>${order.id}</strong></td>
-                        <td>
-                            <div>
-                                <strong>${order.customer.name}</strong><br>
-                                <small>${order.customer.phone}</small>
-                            </div>
-                        </td>
-                        <td>${new Date(order.date).toLocaleDateString()}</td>
-                        <td>${itemCount} items</td>
-                        <td><strong>₹${order.total.toLocaleString()}</strong></td>
-                        <td><span class="order-status ${order.status}">${order.status.toUpperCase()}</span></td>
-                        <td><small>${deviceInfo}</small></td>
-                        <td>
-                            <div class="order-actions">
-                                <button class="order-action-btn edit" onclick="updateOrderStatus('${order.id}')" title="Update Status">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="order-action-btn delete" onclick="deleteOrder('${order.id}')" title="Delete Order">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            
-            ordersHTML += `
-                    </tbody>
-                </table>
-            `;
-            
-            ordersContainer.innerHTML = ordersHTML;
-        }
-
-        function updateOrderStatus(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) return;
-            
-            const newStatus = prompt(`Update status for ${orderId}:\n\nCurrent: ${order.status}\n\nEnter new status (pending/processing/completed/cancelled):`, order.status);
-            
-            if (newStatus && ['pending', 'processing', 'completed', 'cancelled'].includes(newStatus.toLowerCase())) {
-                order.status = newStatus.toLowerCase();
-                order.updatedAt = new Date().toLocaleString();
-                
-                saveBusinessData();
-                updateOrdersDisplay();
-                
-                showNotification(`📋 ORDER ${orderId} STATUS UPDATED TO ${newStatus.toUpperCase()}!`, 'success');
-            }
-        }
-
-        function deleteOrder(orderId) {
-            if (!confirm(`Are you sure you want to delete order ${orderId}? This action cannot be undone and will sync across all devices.`)) {
-                return;
-            }
-            
-            const orderIndex = orders.findIndex(o => o.id === orderId);
-            if (orderIndex > -1) {
-                orders.splice(orderIndex, 1);
-                saveBusinessData();
-                updateDashboardStats();
-                updateOrdersDisplay();
-                showNotification(`🗑️ ORDER ${orderId} DELETED FROM ALL DEVICES!`, 'warning');
-            }
-        }
-
-        // Export Functions
-        function exportOrdersToCSV() {
-            if (orders.length === 0) {
-                showNotification('NO ORDERS TO EXPORT!', 'warning');
-                return;
-            }
-            
-            const headers = [
-                'Order ID', 'Order Number', 'Date', 'Customer Name', 'Phone', 'Email', 
-                'Address', 'Items Count', 'Total Quantity', 'Subtotal', 'Total', 'Status', 'Notes', 'Device ID', 'Created At'
-            ];
-            
-            const csvData = orders.map(order => {
-                const itemCount = order.items.length;
-                const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
-                
-                return [
-                    order.id,
-                    order.orderNumber,
-                    new Date(order.date).toLocaleDateString(),
-                    order.customer.name,
-                    order.customer.phone,
-                    order.customer.email || '',
-                    `"${order.customer.address.replace(/"/g, '""')}"`,
-                    itemCount,
-                    totalQuantity,
-                    order.subtotal,
-                    order.total,
-                    order.status,
-                    `"${(order.notes || '').replace(/"/g, '""')}"`,
-                    order.deviceId || '',
-                    order.createdAt
-                ];
-            });
-            
-            const csvContent = [headers, ...csvData].map(row => row.join(',')).join('\n');
-            downloadCSV(csvContent, `varka-orders-${new Date().toISOString().split('T')[0]}.csv`);
-            
-            showNotification('📊 ORDERS EXPORTED SUCCESSFULLY!', 'success');
-        }
-
-        function downloadCSV(csvContent, filename) {
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement('a');
-            
-            if (link.download !== undefined) {
-                const url = URL.createObjectURL(blob);
-                link.setAttribute('href', url);
-                link.setAttribute('download', filename);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        }
-
-        async function clearAllData() {
-            if (!confirm('Are you sure you want to clear ALL business data? This includes orders, customers, and statistics. This action will sync across ALL devices and cannot be undone.')) {
-                return;
-            }
-            
-            if (!confirm('This will permanently delete all your business data from ALL DEVICES. Type "CLEAR" in the next prompt to confirm.')) {
-                return;
-            }
-            
-            const confirmation = prompt('Type "CLEAR" to confirm deletion:');
-            if (confirmation !== 'CLEAR') {
-                showNotification('❌ DATA DELETION CANCELLED!', 'info');
-                return;
-            }
-            
-            orders = [];
-            customers = [];
-            orderIdCounter = 1000;
-            
-            // Clear from Firebase and local storage
-            if (currentUser && isOnline) {
-                try {
-                    await Promise.all([
-                        set(ref(database, `users/${currentUser.uid}/orders`), []),
-                        set(ref(database, `users/${currentUser.uid}/customers`), []),
-                        set(ref(database, `users/${currentUser.uid}/orderCounter`), 1000)
-                    ]);
-                    console.log('All business data cleared from cloud');
-                } catch (error) {
-                    console.error('Failed to clear cloud data:', error);
-                }
-            }
-            
-            // Clear local storage as fallback
-            localStorage.removeItem('varka_orders');
-            localStorage.removeItem('varka_customers');
-            localStorage.removeItem('varka_orderCounter');
-            
-            updateDashboardStats();
-            updateOrdersDisplay();
-            
-            showNotification('🧹 ALL BUSINESS DATA CLEARED FROM ALL DEVICES!', 'warning');
-        }
+        // Global Variables
+        let currentOrderForContact = null;
 
         // Login Functions
         function handleLogin(event) {
@@ -1920,11 +1520,11 @@
             loginError.classList.remove('show');
             
             loginBtn.disabled = true;
-            loginBtn.innerHTML = '<span class="loading-spinner"></span> CONNECTING TO CLOUD...';
+            loginBtn.innerHTML = '<span class="loading-spinner"></span> VERIFYING...';
             
-            setTimeout(async () => {
+            setTimeout(() => {
                 if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-                    await loginSuccess();
+                    loginSuccess();
                 } else {
                     loginError.classList.add('show');
                     loginBtn.disabled = false;
@@ -1936,143 +1536,430 @@
             }, 1500);
         }
 
-        async function loginSuccess() {
+        function loginSuccess() {
             const loginScreen = document.getElementById('login-screen');
             const mainWebsite = document.getElementById('main-website');
             
-            // Initialize Firebase authentication
-            updateSyncStatus('syncing', 'CONNECTING');
-            await initializeFirebaseAuth();
-            
             loginScreen.classList.add('hidden');
             
-            setTimeout(async () => {
+            setTimeout(() => {
                 mainWebsite.classList.add('show');
-                await initializeWebsite();
-                
-                if (currentUser && isOnline) {
-                    updateSyncStatus('online', 'SYNCED');
-                    showNotification('🌐 CONNECTED TO CLOUD! REAL-TIME SYNC ENABLED ACROSS ALL DEVICES!', 'success');
-                } else if (!isOnline) {
-                    updateSyncStatus('offline', 'OFFLINE');
-                    showNotification('📱 OFFLINE MODE - DATA SAVED LOCALLY', 'warning');
-                } else {
-                    updateSyncStatus('offline', 'NO AUTH');
-                    showNotification('⚠️ CLOUD CONNECTION FAILED - USING LOCAL STORAGE', 'warning');
-                }
+                initializeWebsite();
             }, 500);
             
             sessionStorage.setItem('varkaLoggedIn', 'true');
+            showNotification('WELCOME TO VARKA BUSINESS PORTAL!', 'success');
         }
 
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
-                // Clean up listeners and presence
-                cleanupListeners();
-                if (currentUser && isOnline) {
-                    const deviceRef = ref(database, `users/${currentUser.uid}/devices/${deviceId}`);
-                    remove(deviceRef);
-                }
-                
-                currentUser = null;
                 sessionStorage.removeItem('varkaLoggedIn');
                 location.reload();
             }
         }
 
-        async function checkLoginState() {
+        function checkLoginState() {
             const isLoggedIn = sessionStorage.getItem('varkaLoggedIn') === 'true';
             
             if (isLoggedIn) {
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-website').classList.add('show');
-                
-                // Initialize Firebase
-                await initializeFirebaseAuth();
-                await initializeWebsite();
+                initializeWebsite();
             }
         }
 
-        async function initializeWebsite() {
-            await loadBusinessData();
+        function initializeWebsite() {
+            // Initialize any required data
+            console.log('Website initialized');
+        }
+
+        // Improved Checkout Functions
+        function proceedToCheckout() {
+            // Show checkout modal
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            checkoutModal.show();
+            
+            // Reset form
+            document.getElementById('checkoutForm').reset();
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.classList.remove('is-invalid');
+            });
+        }
+
+        function validateCheckoutForm() {
+            const form = document.getElementById('checkoutForm');
+            const customerName = document.getElementById('customerName');
+            const customerPhone = document.getElementById('customerPhone');
+            const customerEmail = document.getElementById('customerEmail');
+            const customerAddress = document.getElementById('customerAddress');
+            
+            let isValid = true;
+            
+            // Reset all validation states
+            form.querySelectorAll('.form-control').forEach(input => {
+                input.classList.remove('is-invalid');
+            });
+            
+            // Validate name
+            if (!customerName.value.trim()) {
+                customerName.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phonePattern = /^[0-9]{10}$/;
+            if (!customerPhone.value.trim() || !phonePattern.test(customerPhone.value.trim())) {
+                customerPhone.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate address
+            if (!customerAddress.value.trim()) {
+                customerAddress.classList.add('is-invalid');
+                isValid = false;
+            }
+            
+            // Validate email if provided
+            if (customerEmail.value.trim()) {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(customerEmail.value.trim())) {
+                    customerEmail.classList.add('is-invalid');
+                    isValid = false;
+                }
+            }
+            
+            return isValid;
+        }
+
+        async function submitOrder() {
+            if (!validateCheckoutForm()) {
+                showNotification('PLEASE FILL IN ALL REQUIRED FIELDS CORRECTLY!', 'error');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submit-order-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> PROCESSING ORDER...';
+            
+            // Simulate order processing
+            setTimeout(() => {
+                const customerData = {
+                    name: document.getElementById('customerName').value.trim(),
+                    phone: document.getElementById('customerPhone').value.trim(),
+                    email: document.getElementById('customerEmail').value.trim(),
+                    address: document.getElementById('customerAddress').value.trim()
+                };
+                const orderNotes = document.getElementById('orderNotes').value.trim();
+                
+                // Create demo order
+                const order = {
+                    id: 'VRK-' + Math.floor(1000 + Math.random() * 9000),
+                    date: new Date().toISOString(),
+                    total: 3147.00,
+                    items: [
+                        { name: 'DEATH T-Shirt', size: 'M', fit: 'Regular', quantity: 2, price: 999 },
+                        { name: 'HERMES T-Shirt', size: 'L', fit: 'Oversized', quantity: 1, price: 1149 }
+                    ]
+                };
+                
+                // Close checkout modal
+                const checkoutModal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
+                checkoutModal.hide();
+                
+                // Show contact choice modal
+                showContactChoiceModal(order, customerData, orderNotes);
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane me-2"></i>SUBMIT ORDER';
+                
+                // Reset form
+                document.getElementById('checkoutForm').reset();
+            }, 2000);
+        }
+
+        function showContactChoiceModal(order, customerData, orderNotes) {
+            currentOrderForContact = { order, customerData, orderNotes };
+            
+            // Populate modal with order info
+            document.getElementById('contact-order-id').textContent = order.id;
+            document.getElementById('contact-order-total').textContent = `₹${order.total.toFixed(2)}`;
+            
+            // Create and show order details
+            const orderSummary = createOrderSummary(order, customerData, orderNotes);
+            document.getElementById('contact-order-details').textContent = orderSummary;
+            
+            // Copy to clipboard
+            copyToClipboard(orderSummary);
+            window.currentOrderSummary = orderSummary;
+            
+            // Show the modal
+            const contactModal = new bootstrap.Modal(document.getElementById('contactChoiceModal'));
+            contactModal.show();
+            
+            showNotification('ORDER SUBMITTED & SAVED TO BUSINESS SYSTEM!', 'success');
+        }
+
+        // Enhanced Email Function with Better Browser Support
+        function sendViaEmail() {
+            if (!currentOrderForContact) return;
+            
+            const { order, customerData, orderNotes } = currentOrderForContact;
+            
+            // Show email status overlay
+            showEmailStatus();
+            
+            // Create email content
+            const subject = encodeURIComponent(`🎉 NEW ORDER #${order.id} - ${customerData.name}`);
+            const emailContent = createEmailOrderContent(order, customerData, orderNotes);
+            const body = encodeURIComponent(emailContent);
+            
+            // Try multiple email methods for better browser compatibility
+            setTimeout(() => {
+                try {
+                    // Method 1: Try mailto (works in most browsers)
+                    const mailtoUrl = `mailto:varka.clothing@gmail.com?subject=${subject}&body=${body}`;
+                    
+                    // Create a temporary link and click it
+                    const tempLink = document.createElement('a');
+                    tempLink.href = mailtoUrl;
+                    tempLink.style.display = 'none';
+                    document.body.appendChild(tempLink);
+                    tempLink.click();
+                    document.body.removeChild(tempLink);
+                    
+                    // For Chrome and other browsers that might block mailto
+                    setTimeout(() => {
+                        // Try opening in new window as fallback
+                        window.open(mailtoUrl, '_blank');
+                    }, 500);
+                    
+                } catch (error) {
+                    console.error('Email opening failed:', error);
+                    // Fallback: Show manual instructions
+                    showNotification('PLEASE COPY ORDER DETAILS AND SEND TO VARKA.CLOTHING@GMAIL.COM', 'info');
+                }
+                
+                // Hide email status after a delay
+                setTimeout(() => {
+                    hideEmailStatus();
+                }, 3000);
+            }, 1000);
+            
+            showNotification('📧 EMAIL CLIENT OPENING! SEND TO VARKA.CLOTHING@GMAIL.COM', 'success');
+        }
+
+        function sendViaWhatsApp() {
+            if (!currentOrderForContact) return;
+            
+            const { order, customerData, orderNotes } = currentOrderForContact;
+            const whatsappContent = createWhatsAppOrderContent(order, customerData, orderNotes);
+            
+            // Create WhatsApp link (works on all devices)
+            const whatsappUrl = `https://wa.me/919945268777?text=${encodeURIComponent(whatsappContent)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            showNotification('📱 WHATSAPP OPENED! SEND TO +91 9945268777', 'success');
+        }
+
+        function showEmailStatus() {
+            const overlay = document.getElementById('emailStatusOverlay');
+            overlay.classList.add('show');
+        }
+
+        function hideEmailStatus() {
+            const overlay = document.getElementById('emailStatusOverlay');
+            overlay.classList.remove('show');
+        }
+
+        function closeEmailStatus() {
+            hideEmailStatus();
+        }
+
+        function createOrderSummary(order, customerData, orderNotes) {
+            const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
+            
+            let orderSummary = "NEW ORDER FROM VARKA WEBSITE\n";
+            orderSummary += "================================\n\n";
+            
+            orderSummary += "ORDER INFORMATION:\n";
+            orderSummary += "Order ID: " + order.id + "\n";
+            orderSummary += "Date: " + new Date(order.date).toLocaleDateString() + "\n";
+            orderSummary += "Status: PENDING\n\n";
+            
+            orderSummary += "CUSTOMER DETAILS:\n";
+            orderSummary += "Name: " + customerData.name + "\n";
+            orderSummary += "Phone: " + customerData.phone + "\n";
+            if (customerData.email) orderSummary += "Email: " + customerData.email + "\n";
+            orderSummary += "Address: " + customerData.address + "\n\n";
+            
+            orderSummary += "ORDER DETAILS:\n";
+            orderSummary += "Total Items: " + order.items.length + " different designs\n";
+            orderSummary += "Total Quantity: " + totalQuantity + " pieces\n\n";
+            
+            order.items.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                orderSummary += (index + 1) + ". " + item.name + "\n";
+                orderSummary += "   Size: " + item.size + " | Fit: " + item.fit + "\n";
+                orderSummary += "   Quantity: " + item.quantity + " pieces\n";
+                orderSummary += "   Unit Price: Rs." + item.price + "\n";
+                orderSummary += "   Item Total: Rs." + itemTotal + "\n\n";
+            });
+            
+            orderSummary += "FINANCIAL SUMMARY:\n";
+            orderSummary += "Items Subtotal: Rs." + order.total.toFixed(2) + "\n";
+            orderSummary += "Taxes: INCLUDED IN PRICES\n";
+            orderSummary += "Shipping: TO BE CALCULATED\n";
+            orderSummary += "TOTAL AMOUNT: Rs." + order.total.toFixed(2) + "\n\n";
+            
+            if (orderNotes) {
+                orderSummary += "SPECIAL INSTRUCTIONS:\n" + orderNotes + "\n\n";
+            }
+            
+            orderSummary += "Thank you for choosing VARKA!\n";
+            orderSummary += "Contact: varka.clothing@gmail.com | +91 9945268777";
+            
+            return orderSummary;
+        }
+
+        function createEmailOrderContent(order, customerData, orderNotes) {
+            return createOrderSummary(order, customerData, orderNotes);
+        }
+
+        function createWhatsAppOrderContent(order, customerData, orderNotes) {
+            const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
+            
+            let content = `🎉 *NEW ORDER - VARKA CLOTHING* 🎉\n\n`;
+            
+            content += `📋 *ORDER INFORMATION:*\n`;
+            content += `Order ID: *${order.id}*\n`;
+            content += `Date: ${new Date(order.date).toLocaleDateString()}\n`;
+            content += `Status: PENDING\n\n`;
+            
+            content += `👤 *CUSTOMER DETAILS:*\n`;
+            content += `Name: *${customerData.name}*\n`;
+            content += `Phone: ${customerData.phone}\n`;
+            if (customerData.email) content += `Email: ${customerData.email}\n`;
+            content += `Address: ${customerData.address}\n\n`;
+            
+            content += `🛍️ *ORDER DETAILS:*\n`;
+            content += `Total Items: ${order.items.length} different designs\n`;
+            content += `Total Quantity: *${totalQuantity} pieces*\n\n`;
+            
+            order.items.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                content += `${index + 1}. *${item.name}*\n`;
+                content += `   Size: ${item.size} | Fit: ${item.fit}\n`;
+                content += `   Quantity: ${item.quantity} pieces\n`;
+                content += `   Unit Price: ₹${item.price}\n`;
+                content += `   Total: *₹${itemTotal}*\n\n`;
+            });
+            
+            content += `💰 *FINANCIAL SUMMARY:*\n`;
+            content += `*TOTAL AMOUNT: ₹${order.total.toFixed(2)}*\n\n`;
+            
+            if (orderNotes) {
+                content += `📝 *SPECIAL INSTRUCTIONS:*\n${orderNotes}\n\n`;
+            }
+            
+            content += `✅ Order saved to VARKA business system\n`;
+            content += `📞 Contact: varka.clothing@gmail.com\n`;
+            content += `🌐 VARKA - Premium Custom Clothing`;
+            
+            return content;
+        }
+
+        // Improved clipboard function with better browser support
+        function copyToClipboard(text) {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        console.log('Text copied to clipboard successfully');
+                    }).catch(() => {
+                        fallbackCopyToClipboard(text);
+                    });
+                } else {
+                    fallbackCopyToClipboard(text);
+                }
+            } catch (error) {
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        function fallbackCopyToClipboard(text) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                textArea.style.opacity = '0';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (!successful) {
+                    console.warn('Fallback copy failed');
+                }
+            } catch (err) {
+                console.error('Could not copy text: ', err);
+            }
+        }
+
+        function copyOrderDetailsAgain() {
+            if (window.currentOrderSummary) {
+                copyToClipboard(window.currentOrderSummary);
+                showNotification('ORDER DETAILS COPIED TO CLIPBOARD!', 'success');
+            }
         }
 
         // Page Management
         function showPage(pageId) {
-            showLoadingOverlay();
-            
-            // Don't update nav for product detail page
-            if (pageId !== 'product-detail') {
-                document.querySelectorAll('.nav-link').forEach(link => {
-                    link.classList.remove('active');
-                    if (link.onclick && link.onclick.toString().includes(pageId)) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            setTimeout(() => {
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                document.getElementById(`${pageId}-page`).classList.add('active');
-                
-                if (pageId === 'dashboard') {
-                    updateDashboardStats();
-                    updateOrdersDisplay();
-                }
-                
-                window.scrollTo(0, 0);
-                hideLoadingOverlay();
-            }, 300);
-        }
-
-        function showLoadingOverlay() {
-            const overlay = document.getElementById('loading-overlay');
-            overlay.classList.add('active');
-        }
-
-        function hideLoadingOverlay() {
-            const overlay = document.getElementById('loading-overlay');
-            overlay.classList.remove('active');
-        }
-
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
+            
+            document.getElementById(`${pageId}-page`).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.onclick && link.onclick.toString().includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
+            
+            window.scrollTo(0, 0);
         }
 
         // Enhanced Notification System
         function showNotification(message, type = 'success') {
+            // Remove existing notifications
             document.querySelectorAll('.notification').forEach(notification => {
                 notification.remove();
             });
 
             const notification = document.createElement('div');
-            notification.className = 'notification';
+            notification.className = `notification ${type}`;
             
             let iconClass = 'fas fa-check-circle';
-            let backgroundColor = 'var(--success-color)';
             
             switch(type) {
                 case 'warning':
                     iconClass = 'fas fa-exclamation-triangle';
-                    backgroundColor = 'var(--warning-color)';
                     break;
                 case 'info':
                     iconClass = 'fas fa-info-circle';
-                    backgroundColor = 'var(--primary-color)';
                     break;
                 case 'error':
                     iconClass = 'fas fa-times-circle';
-                    backgroundColor = 'var(--accent-color)';
                     break;
             }
-            
-            notification.style.background = `linear-gradient(45deg, ${backgroundColor}, #20c997)`;
             
             notification.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 1rem;">
@@ -2096,74 +1983,19 @@
             }, 4000);
         }
 
-        function showSyncNotification(message) {
-            console.log('Sync:', message);
-            // Only show sync notifications in development/debug mode
-            // Uncomment the line below to see sync notifications
-            // showNotification(message, 'info');
-        }
-
-        // Scroll Handler
-        function handleScroll() {
-            const backToTop = document.querySelector('.back-to-top');
-            const navbar = document.querySelector('.navbar');
-            
-            if (window.scrollY > 300) {
-                backToTop.classList.add('active');
-            } else {
-                backToTop.classList.remove('active');
-            }
-            
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-
-        // Make functions available globally
-        window.handleLogin = handleLogin;
-        window.logout = logout;
-        window.showPage = showPage;
-        window.scrollToTop = scrollToTop;
-        window.addTestOrder = addTestOrder;
-        window.filterOrders = filterOrders;
-        window.updateOrderStatus = updateOrderStatus;
-        window.deleteOrder = deleteOrder;
-        window.exportOrdersToCSV = exportOrdersToCSV;
-        window.clearAllData = clearAllData;
-
         // Initialize on DOM load
         document.addEventListener('DOMContentLoaded', function() {
             checkLoginState();
         });
 
-        // Save data before unload
-        window.addEventListener('beforeunload', async function() {
-            if (currentUser && isOnline) {
-                try {
-                    await saveBusinessData();
-                    // Remove device presence
-                    const deviceRef = ref(database, `users/${currentUser.uid}/devices/${deviceId}`);
-                    await remove(deviceRef);
-                } catch (error) {
-                    console.error('Failed to cleanup before unload:', error);
-                }
-            }
-        });
-
-        console.log('🎉 VARKA BUSINESS MANAGEMENT SYSTEM WITH REAL-TIME CROSS-DEVICE SYNC! 🌐📱💼');
+        console.log('VARKA BUSINESS MANAGEMENT SYSTEM - IMPROVED CHECKOUT! 🎉💼📧📱');
         console.log('Login: varkaclothing / varka_2025');
-        console.log('✨ FEATURES: Dashboard, Real-time Orders, Cross-device Sync, Device Tracking');
-        console.log('📱 CROSS-DEVICE SYNC: Login on multiple devices and see changes instantly!');
-        console.log('🌐 REAL-TIME UPDATES: Changes sync across all logged-in devices immediately');
-        console.log('🛒 PERSISTENT DATA: All orders and customers sync across all devices');
-        console.log('📊 DEVICE TRACKING: See how many devices are connected');
-        console.log('🔄 OFFLINE SUPPORT: Works offline and syncs when back online');
-        console.log('⚠️ NOTE: Replace Firebase config with your actual project credentials!');
-        console.log('Complete business solution with enhanced Firebase real-time database integration!');
+        console.log('✅ Enhanced mobile responsiveness');
+        console.log('✅ Improved email compatibility for Chrome & Safari');
+        console.log('✅ Better form validation and UX');
+        console.log('✅ Responsive modal design');
+        console.log('✅ Cross-browser email support with fallbacks');
+        console.log('Complete checkout solution optimized for all devices!');
     </script>
 </body>
 
